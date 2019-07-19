@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>授权</title>
+    <!-- 设置 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+        body{
+            font-family:'Microsoft Yahei','Simsun';
+            color:#333;
+        }
+        input{
+          outline: none;
+        }
+        html,body{
+          width:100%;
+          height: 100%;
+          padding:0;
+          margin:0;
+        }
+        .content_box{
+          width: 100%;
+          height: 100%;
+          background: url(images/bg1.jpg) 0 0 no-repeat;
+          background-size: 100% 100%;
+        }
+        .main{
+          width: 100%;
+          overflow:hidden;
+          max-height: 100%;
+          position: relative;
+        }
+        .empower{
+          width: 70%;
+          margin: 0 auto;
+          display: block;
+          margin-top: 10%;
+        }
+        .btn1{
+          margin-top: 3%;
+          width: 100%;
+          display:block;
+          overflow:hidden;
+          outline-style: none;
+        }
+        .btn1 img{
+          width: 100%;
+        }
+        a{
+          -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+          -webkit-user-select: none;
+          -moz-user-focus: none;
+          -moz-user-select: none;
+        }
+        .btn1{
+          -webkit-animation: scaleDraw 4s ease-in-out infinite;
+        }
+            @keyframes scaleDraw {  /*定义关键帧、scaleDrew是需要绑定到选择器的关键帧名称*/
+                0%{
+                    transform: scale(1);  /*开始为原始大小*/
+                }
+                25%{
+                    transform: scale(1.2); /*放大1.1倍*/
+                }
+                50%{
+                    transform: scale(1);
+                }
+                75%{
+                    transform: scale(1.2);
+                }
+            }
+            .mainText{
+              position: absolute;
+              top:49%;
+              left: 21%;
+              width: 60%;
+              height: 47%;
+              /*border: 1px solid #ccc;*/
+              overflow-y:auto;
+            }
+            .mainText p{
+              width: 100%;
+              overflow:hidden;
+              font-size: 12px;
+              color: #fff;
+              margin:0;
+            }
+            @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+              .btn1{
+                  margin-top: 5%;
+                }
+            }
+            @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio:2) {
+              .btn1{
+                  margin-top: 5%;
+                }
+            }
+            .mainText::-webkit-scrollbar-track-piece {
+                background-color: rgba(0, 0, 0, 0);
+                border-left: 1px solid rgba(0, 0, 0, 0);
+            }
+            .mainText::-webkit-scrollbar {
+                width: 5px;
+                height: 13px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+            }
+            .mainText::-webkit-scrollbar-thumb {
+                background-color: rgba(0, 0, 0, 0.5);
+                background-clip: padding-box;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                min-height: 28px;
+            }
+            .mainText::-webkit-scrollbar-thumb:hover {
+                background-color: rgba(0, 0, 0, 0.5);
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+            }
+
+    </style>
+</head>
+<body>
+ <div class="content_box" id="main">
+   <div class="main">
+     <img src="images/empower.png" class="empower">
+     <div class="mainText">
+       <p>1. 您了解并同意公司收集、使用您的个人信息资料。</p>
+       <p>2. 您了解并同意公司收集您个人资料的目的，包括但不限制于：2019NU SKIN超级年会现场参与数据收集及现场互动获奖身份核实；进行数据存储、数据库管理和技术服务；调查、统计与研究分析。</p>
+       <p>3. 您清楚的了解并同意，对于您的个人资料的使用方包含如新中国、如新中国关联企业、法律规定的政府机关或有权机构及如新中国合作厂商（但该合作厂商只在必要范围内获得您的个人资料，且会被要求确保您个人资料的保密性并采取相应安全措施）。由于公司的关联企业及合作厂商可能位于境外，所以您的个人资料使用的地区包括中国境内（含港澳台地区）及境外。关于您个人资料的使用方式，会以自动化机器或其他非自动化的使用方式进行行收集、保存、处理、使用及传输（包括国际传输）。</p>
+       <p>4. 公司将在上述目的、范围及使用方式收集和使用您的个人资料，并采取合适和必要的措施防止泄漏和丢失，未经您的同意，不会在本同意书范围之外向他人披露或售卖您的个人资料。</p>
+       <p>5. 您清楚了解：您可以选择是否提供个人资料，但若您不提供相关个人资料或提供的个人资料不真实（包括未对变更的资料进行更新通知），公司可能将无法提供您所需的产品或服务，对因您未提供准确的个人资料所引起的任何不利后果，公司不承担相应责任。</p>
+     </div>
+   </div>
+
+   <b href=""  class="btn1">
+     <img src="images/powerbtn.png">
+   </b>
+
+ </div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="https://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+<script src="../../data-js/js.cookie.js"></script>
+<script src="../../data-js/js.storage.min.js"></script>
+<script src="../../data-js/hh-empower.js"></script>
+<script type="text/javascript">
+  $(function(){
+    var person = 1;
+    if(person == 1){
+      $(".btn1").attr("href","index.html");
+    }else if(person == 2){
+      $(".btn1").attr("href","index.html");
+    }else if(person == 3){
+      $(".btn1").attr("href","g4.html");
+    }
+  })
+
+  $(".btn1").click(function(){
+    window.location.replace("index.html");
+  })
+
+
+      //禁止下拉及默认滑动动作
+      // document.getElementById("main").addEventListener('touchmove',e,false);
+      // function e(event){
+      //   event.preventDefault();
+      // }
+
+</script>
+</html>

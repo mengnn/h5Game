@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>事业经营伙伴</title>
+    <!-- 设置 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+        body{
+            font-family:'Microsoft Yahei','Simsun';
+            color:#333;
+        }
+        input{
+          outline: none;
+        }
+        html,body{
+          width:100%;
+          height: 100%;
+          padding:0;
+          margin:0;
+        }
+        .content_box{
+          width: 100%;
+          height: 100%;
+          background: url(images/bg2.png) 0 0 no-repeat;
+          background-size: 100% 100%;
+        }
+        .main{
+          width: 100%;
+          overflow:hidden;
+          max-height: 100%;
+        }
+        .logo1{
+          width: 74%;
+          margin: 0 auto;
+          display: block;
+          margin-top: 8%;
+        }
+        .btn1{
+          margin-top: 0%;
+          width: 100%;
+          display:block;
+          overflow:hidden;
+          outline-style: none;
+        }
+        .btn1 img{
+          width: 100%;
+        }
+        a{
+          -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+          -webkit-user-select: none;
+          -moz-user-focus: none;
+          -moz-user-select: none;
+        }
+        .htmlBox{
+          width: 100%;
+          overflow:hidden;
+          position: relative;
+          margin-top: 5%;
+        }
+        .htmlBox img{
+          width: 100%;
+        }
+        .g2_title{
+          position: absolute;
+          width: 100%;
+          text-align: center;
+          color: #fff;
+          font-size: 20px;
+          left: 0;
+          top: 15%;
+        }
+        .mainBox{
+          width: 100%;
+          overflow:hidden;
+          position: absolute;
+          top: 37%;
+          left: 0;
+        }
+        .inputBox{
+          width: 64%;
+          margin:0 auto;
+          overflow:hidden;
+          /*height: 30px;*/
+          /*border: 1px solid #ccc;*/
+          margin-bottom: 10px;
+        }
+        .inputBox span{
+          color: #fff;
+          font-size: 16px;
+        }
+        .inputBox input,.inputBox select{
+          width: 78%;
+          background: transparent;
+          outline-style: none;
+          border:none;
+          border-bottom: 1px solid #fff;
+          color: #fff;
+          border-radius: 0;
+          box-sizing: content-box;
+          font-size: 16px;
+        }
+        ::-webkit-input-placeholder { /* Chrome */
+            color: #e5e5e5;
+          }
+          :-ms-input-placeholder { /* IE 10+ */
+            color: color: #e5e5e5;
+          }
+          ::-moz-placeholder { /* Firefox 19+ */
+            color: color: #e5e5e5;
+          }
+          :-moz-placeholder { /* Firefox 4 - 18 */
+            color: color: #e5e5e5;
+          }
+           @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+              .btn1{
+                  margin-top: 2%;
+                }
+            }
+            @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio:2) {
+              .btn1{
+                  margin-top: 2%;
+                }
+            }
+
+    </style>
+</head>
+<body>
+ <div class="content_box" id="main">
+   <div class="main">
+     <img src="images/logo1.png" class="logo1">
+     <div class="htmlBox">
+       <img src="images/box.png">
+       <p class="g2_title">NU SKIN事业经营伙伴</p>
+       <div class="mainBox">
+         <div class="inputBox">
+           <span>姓名</span>
+           <input type="text" id="xm" name="" placeholder="请输入姓名" class="inputbBlur">
+         </div>
+         <div class="inputBox">
+           <span>手机号</span>
+           <input type="text" id="dh" name="" style="width: 71%;"  placeholder="请输入手机号" class="inputbBlur">
+         </div>
+         <div class="inputBox">
+           <span>CN号</span>
+           <input type="text" id="cnid" name="" style="width: 75%;" placeholder="请输入CN号" class="inputbBlur">
+         </div>
+       </div>
+     </div>
+     <b  class="btn1">
+       <img src="images/btn3.png">
+     </b>
+   </div>
+ </div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="../../data-js/js.cookie.js"></script>
+<script src="../../data-js/js.storage.min.js"></script>
+<script type="text/javascript">
+
+      //禁止下拉及默认滑动动作
+      document.getElementById("main").addEventListener('touchmove',e,false);
+      function e(event){
+        event.preventDefault();
+      }
+      $(".btn1").click(function(){
+
+        var name = $("#xm").val();
+    	var mobile = $("#dh").val();
+    	var cnid = $("#cnid").val();
+    	var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+    	if (!myreg.test(mobile)) {
+    		alert("手机号格式不正确");
+    		return;
+    	}
+    	if (!name) {
+    		alert("请填写姓名");
+    		return;
+    	}
+    	if (!cnid) {
+    		alert("请填写CN");
+    		return;
+    	}
+    	Storages.cookieStorage.setConf({path:'/',expires:100}).set('name',name);
+    	Storages.cookieStorage.setConf({path:'/',expires:100}).set('mobile',mobile);
+    	Storages.cookieStorage.setConf({path:'/',expires:100}).set('age',"0");
+    	Storages.cookieStorage.setConf({path:'/',expires:100}).set('cnid',cnid);
+    	window.location.replace("login.html");
+      })
+
+       // 解决input
+    $(".inputbBlur").blur(function(){
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    });
+    $(".inputbBlur").focus(function(){
+        document.body.scrollTop = 220;
+        document.documentElement.scrollTop = 220;
+    });
+</script>
+</html>

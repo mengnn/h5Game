@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Go</title>
+    <!-- 设置 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+        body{
+            font-family:'Microsoft Yahei','Simsun';
+            color:#333;
+        }
+        input{
+          outline: none;
+        }
+        html,body{
+          width:100%;
+          height: 100%;
+          padding:0;
+          margin:0;
+        }
+        .content_box{
+          width: 100%;
+          height: 100%;
+          background: url(images/game1.png) 0 0 no-repeat;
+          background-size: 100% 100%;
+        }
+        .mainTime{
+          width: 80%;
+          overflow:hidden;
+          position: relative;
+          top: 8%;
+          left: 10%;
+        }
+        .timeBox{
+          width: 100%;
+        }
+        .timeList{
+          width: 80%;
+          height: 30%;
+          background: url(images/timeList.png) 0 0 no-repeat;
+          background-size: 100% 100%;
+          position: absolute;
+          right: 17%;
+          top: 26%;
+          text-align: center;
+          line-height: 115%;
+          font-family: "AGENCYB";
+        }
+
+
+        .time{
+          position: absolute;
+          display:inline-block;
+          top: 20px;
+          right: 20px;
+          color: #fff;
+          font-size: 18px;
+        }
+        .moduleBox{
+          width: 100%;
+          height: 100%;
+          position: fixed;
+          top: 0;
+          left: 0;
+          background: rgba(0,0,0,0.5);
+          display:none;
+          z-index: 111111111;
+        }
+        .moduleMain{
+          width: 75%;
+          overflow:hidden;
+          position: relative;
+          top:50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+        }
+        .moduleImg{
+          width: 100%;
+        }
+        .moduleHtml{
+          width: 100%;
+          position: absolute;
+          left: 0;
+          top: 45%;
+        }
+        .p1{
+          width: 100%;
+          text-align: center;
+          font-size: 25px;
+          color: #000;
+          margin: 0;
+        }
+        .p2{
+          width: 100%;
+          text-align: center;
+          font-size: 25px;
+          color: #fff;
+          margin: 0;
+          margin-top: 15px;
+          font-family: "AGENCYB";
+        }
+        .delete{
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 20px;
+        }
+        .rankList{
+          margin-top: 3%;
+          width: 100%;
+          display: block;
+          overflow: hidden;
+          outline-style: none;
+          text-align: center;
+        }
+        .rankList img{
+          width: 60%;
+        }
+        .air{
+          width: 16%;
+          position: absolute;
+          bottom: 10%;
+          left: 42%;
+          z-index: 125;
+        }
+        .fuelBox{
+           position: relative;
+           left: 0;
+           top: 0%;
+           width: 100%;
+           height: 80%;
+           overflow: hidden;
+        }
+        .fuel1{
+          width: 14%;
+          position: absolute;
+          top: 5%;
+          left: 40%;
+        }
+        .fuel2{
+          width: 10%;
+          position: absolute;
+          top: 15%;
+          left: 10%;
+        }
+        .fuel3{
+          width: 20%;
+          position: absolute;
+          top: 25%;
+          left: 70%;
+        }
+        .sourceBox{
+          position: relative;
+          top: 8%;
+          float: right;
+          right: 10%;
+          width: 25%;
+          z-index: 11111111;
+        }
+        .sourceImg{
+          width: 100%;
+        }
+        .sourceP{
+          position: absolute;
+          color: #fff;
+          top: 26%;
+          left: 20%;
+           font-family: "AGENCYB";
+        }
+        .fuelBox img{
+          z-index: 125;
+        }
+        .getNum{
+          display:inline-block;
+          position: absolute;
+          top: 50px;
+          left: 30px;
+          width: 80px;
+          height: 30px;
+          font-size: 30px;
+          color: #fff;
+          display:none;
+          font-family: "AGENCYB";
+        }
+
+        @charset "UTF-8";
+
+        @font-face {
+          font-family: "AGENCYB";
+          src: url("./font/AGENCYB.woff2") format("woff2"),
+               url("./font/AGENCYB.woff") format("woff"),
+               url("./font/AGENCYB.ttf") format("truetype"),
+               url("./font/AGENCYB.eot") format("embedded-opentype"),
+               url("./font/AGENCYB.svg") format("svg");
+          font-weight: normal;
+          font-style: normal;
+        }
+
+    </style>
+</head>
+<body>
+ <div class="content_box" id="main">
+  <div class="mainTime">
+    <img src="images/timeBox.png" class="timeBox">
+    <div class="timeList">60</div>
+  </div>
+  <!-- 容器 -->
+  <div class="sourceBox">
+    <img src="images/source.png" class="sourceImg">
+    <span class="sourceP">0</span>
+  </div>
+  <!-- 燃料 -->
+  <div class="fuelBox">
+    <img src="images/fuel2.png" class="fuelImg fuel2">
+    <img src="images/fuel1.png" class="fuelImg fuel1">
+    <img src="images/fuel3.png" class="fuelImg fuel3">
+  </div>
+   <!-- 飞机 -->
+   <img src="images/air.png" class="air">
+   <!-- 得分 -->
+   <div class="getNum"></div>
+ </div>
+ <!-- 遮罩框 -->
+ <div class="moduleBox">
+   <div class="moduleMain">
+     <img src="images/module.png" class="moduleImg">
+     <div class="moduleHtml">
+       <p class="p1">您的助燃数</p>
+       <p class="p2">600L</p>
+     </div>
+     <b class="rankList"><img src="images/rankList.png"></b>
+   </div>
+   <img src="images/delete.png" class="delete">
+ </div>
+</body>
+<script type="text/javascript" src="js/jquery1.7.2.js"></script>
+<script src="../../data-js/js.cookie.js"></script>
+<script src="../../data-js/js.storage.min.js"></script>
+<script type="text/javascript">
+  $(function(){
+	  Storages.alwaysUseJsonInStorage(true);
+	  var openid = Storages.cookieStorage.get('openid');
+      var nickname = Storages.cookieStorage.get('nickname');
+      var headimgurl = Storages.cookieStorage.get('headimgurl');
+      var name = Storages.cookieStorage.get('name');
+      var mobile = Storages.cookieStorage.get('mobile');
+      var age = Storages.cookieStorage.get('age');
+      var cnid = Storages.cookieStorage.get('cnid');
+      var uid = Storages.cookieStorage.get('uid');
+      if(!uid) uid = "";
+	  $.ajax({
+  		url : "/saveHhUser",
+  		data : JSON.stringify({
+  			id : uid+"",
+  			name : name+"",
+  			mobile : mobile+"",
+  			age : age+"",
+  			cnid : cnid+"",
+  			openid : openid,
+  			nickname : nickname+"",
+  			headimgurl : headimgurl
+  		}),
+  		type : "POST",
+  		async : true,
+  		dataType : "json",
+  		contentType : "application/json; charset=UTF-8",
+  	}).done(
+  			function(data) {
+  				var msg = JSON.parse(data.message);
+  				Storages.cookieStorage.setConf({path:'/',expires:100}).set('uid',msg.id);
+  				setTimeout("countSecond()", 5000);
+  			}).fail(
+  			function(xhr, status, errorThrown) {
+  				alert("Sorry, there was a problem! " + "Error: " + errorThrown
+  						+ "Status: " + status);
+  				console.log("Error: " + errorThrown);
+  				console.log("Status: " + status);
+  				console.dir(xhr);
+  			}).always(function(xhr, status) {
+  		console.log("The request is complete!");
+  	});
+
+    init();
+    function init() {
+        if (window && window.DeviceMotionEvent)
+            window.addEventListener("devicemotion", motionHandler, false);
+        if (window && window.DeviceOrientationEvent)
+            window.addEventListener("deviceorientation", DeviceOrientationHandler, false);
+    }
+
+    function DeviceOrientationHandler(event){
+        var alpha = event.alpha,beta = event.beta,gamma = event.gamma;
+        if(alpha != null || beta != null || gamma != null){
+          //各个方向旋转的值
+             // alert(gamma)
+             // var moveNum = 0.55*(gamma+90);  //加速运行
+             // $(".air").css("left",moveNum+"%");
+
+             var moveNum = 1.6*(gamma+30); //正常运行
+             if(gamma>=0){
+              $(".air").css("left",moveNum+"%");
+            }else{
+              $(".air").css("left",moveNum+"%");
+            }
+
+              for(var i=0;i<$(".fuelBox").find("img").length;i++){
+
+                console.log(isOverlap(".air",$(".fuelBox").find("img").eq(i)));
+                if(isOverlap(".air",$(".fuelBox").find("img").eq(i))){
+                  var hasClass1 = $(".fuelBox").find("img").eq(i).hasClass("fuel1");
+                  var hasClass2 = $(".fuelBox").find("img").eq(i).hasClass("fuel2");
+                  var hasClass3 = $(".fuelBox").find("img").eq(i).hasClass("fuel3");
+                  if(hasClass1){
+                    if($(".sourceP").text() == ""){
+                      var sourceNum = 0;
+                    }else{
+                      var sourceNum = parseInt($(".sourceP").text());
+                    }
+                    // 设置得分位置
+                    // alert($(".air").css("left").split("px")[0])
+                    var airLeft = $(".air").css("left").split("px")[0]+200;
+                    var airTop = $(".air").css("top").split("px")[0]-50;
+                    $(".getNum").html("+15")
+                    $(".getNum").fadeIn();
+                    $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                    setTimeout(function(){
+                      $(".getNum").fadeOut();
+                    },800);
+
+                    $(".sourceP").html(sourceNum+15);
+                  }else if(hasClass2){
+                    if($(".sourceP").text() == ""){
+                      var sourceNum = 0;
+                    }else{
+                      var sourceNum = parseInt($(".sourceP").text());
+                    }
+
+                    var airLeft = $(".air").css("left").split("px")[0]+200;
+                    var airTop = $(".air").css("top").split("px")[0]-50;
+                    $(".getNum").html("+5")
+                    $(".getNum").fadeIn();
+                    $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                    setTimeout(function(){
+                      $(".getNum").fadeOut();
+                    },800);
+
+
+                    $(".sourceP").html(sourceNum+5);
+                  }else if(hasClass3){
+                    if($(".sourceP").text() == ""){
+                      var sourceNum = 0;
+                    }else{
+                      var sourceNum = parseInt($(".sourceP").text());
+                    }
+
+                    var airLeft = $(".air").css("left").split("px")[0]+200;
+                    var airTop = $(".air").css("top").split("px")[0]-50;
+                    $(".getNum").html("-10")
+                    $(".getNum").fadeIn();
+                    $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                    setTimeout(function(){
+                      $(".getNum").fadeOut();
+                    },500);
+
+
+                    $(".sourceP").html(sourceNum-10);
+                  }
+                  $(".fuelBox").find("img").eq(i).remove();
+                }
+              }
+            if( gamma > 0 ){
+               // $(".pclass").html("左右："+alpha+"前后"+beta+"扭转"+gamma)
+             }else{
+              // $(".pclass").html("左右："+alpha+"前后"+beta+"扭转"+gamma)
+             }
+         }
+    }
+     function motionHandler(event) {
+
+     }
+
+    function isOverlap(airObj,sourceObj){
+        var objOne=$(airObj),
+            objTwo=sourceObj,
+            offsetOne = objOne.offset(),
+            offsetTwo = objTwo.offset(),
+            topOne=offsetOne.top,
+            topTwo=offsetTwo.top,
+            leftOne=offsetOne.left,
+            leftTwo=offsetTwo.left,
+            widthOne = objOne.width(),
+            widthTwo = objTwo.width(),
+            heightOne = objOne.height(),
+            heightTwo = objTwo.height();
+        var leftTop = leftTwo > leftOne && leftTwo < leftOne+widthOne
+                && topTwo > topOne && topTwo < topOne+heightOne,
+            rightTop = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne
+                && topTwo > topOne && topTwo < topOne+heightOne,
+            leftBottom = leftTwo > leftOne && leftTwo < leftOne+widthOne
+                && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne,
+            rightBottom = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne
+                && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne;
+        return leftTop || rightTop || leftBottom || rightBottom;
+    }
+
+
+
+      // 删除模态框
+    $(".delete").click(function(){
+      $(".moduleBox").hide();
+    });
+    // 60秒倒计时
+    var wait=60;
+    var time = setInterval(function(){
+       if (wait == 0) {
+        var meter = $(".sourceP").text();
+            clearInterval(time);
+            $(".timeList").hide();
+            $(".moduleBox").show();
+            $(".fuelBox").hide();
+            $(".p2").html(meter+"L");
+
+            submitScore();//提交得分
+        } else {
+            wait--;
+
+            // 加速下降
+            if(wait == 48){
+              // alert(wait)
+              clearInterval(set1);
+              //clearInterval(set2);
+              //clearInterval(set3);
+              moveM1(3500);
+            }else if(wait == 38){
+              clearInterval(set11);
+              //clearInterval(set22);
+              //clearInterval(set33);
+              moveM2(2500);
+            }else if(wait == 25){
+              clearInterval(set111);
+              //clearInterval(set222);
+              //clearInterval(set333);
+              moveM3(1500);
+            }else if(wait == 12){
+              clearInterval(set1111);
+              //clearInterval(set2222);
+              //clearInterval(set3333);
+              moveM4(1000);
+            }
+
+
+
+            $(".timeList").html(wait);
+            var timeW = 80*wait/60;
+            //console.log(timeW);
+            $(".timeList").css("width",timeW+"%")
+        }
+    },1000);
+
+
+      //禁止下拉及默认滑动动作
+      document.getElementById("main").addEventListener('touchmove',e,false);
+      function e(event){
+        event.preventDefault();
+      }
+
+      // 燃料移动
+      function fuelMove(time){
+        $(".fuel1").animate({top:"100%"},time,"linear",function(){
+          $(this).remove();
+        });
+        for(var i=0;i<$(".fuelBox").find("img").length;i++){
+              // console.log(isOverlap(".air",$(".fuelBox").find("img").eq(i)));
+              if(isOverlap(".air",$(".fuelBox").find("img").eq(i))){
+                var hasClass1 = $(".fuelBox").find("img").eq(i).hasClass("fuel1");
+                var hasClass2 = $(".fuelBox").find("img").eq(i).hasClass("fuel2");
+                var hasClass3 = $(".fuelBox").find("img").eq(i).hasClass("fuel3");
+                if(hasClass1){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+                  // 设置得分位置
+                  // alert($(".air").css("left").split("px")[0])
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+15")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+                  $(".sourceP").html(sourceNum+15);
+                }else if(hasClass2){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+5")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+                  $(".sourceP").html(sourceNum+5);
+
+                }else if(hasClass3){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("-10")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },500);
+
+                  $(".sourceP").html(sourceNum-10);
+
+                }
+                $(".fuelBox").find("img").eq(i).remove();
+              }
+            }
+      }
+      function fuelMove2(time){
+        $(".fuel2").animate({top:"100%"},time,"linear",function(){
+          $(this).remove();
+        });
+        for(var i=0;i<$(".fuelBox").find("img").length;i++){
+
+              console.log(isOverlap(".air",$(".fuelBox").find("img").eq(i)));
+              if(isOverlap(".air",$(".fuelBox").find("img").eq(i))){
+                var hasClass1 = $(".fuelBox").find("img").eq(i).hasClass("fuel1");
+                var hasClass2 = $(".fuelBox").find("img").eq(i).hasClass("fuel2");
+                var hasClass3 = $(".fuelBox").find("img").eq(i).hasClass("fuel3");
+                if(hasClass1){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+                  // 设置得分位置
+                  // alert($(".air").css("left").split("px")[0])
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+15")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+                  $(".sourceP").html(sourceNum+15);
+                }else if(hasClass2){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+5")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+
+                  $(".sourceP").html(sourceNum+5);
+                }else if(hasClass3){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("-10")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },500);
+
+
+                  $(".sourceP").html(sourceNum-10);
+                }
+                $(".fuelBox").find("img").eq(i).remove();
+              }
+            }
+      }
+      function fuelMove3(time){
+        $(".fuel3").animate({top:"100%"},time,"linear",function(){
+          $(this).remove();
+        });
+        for(var i=0;i<$(".fuelBox").find("img").length;i++){
+
+              console.log(isOverlap(".air",$(".fuelBox").find("img").eq(i)));
+              if(isOverlap(".air",$(".fuelBox").find("img").eq(i))){
+                var hasClass1 = $(".fuelBox").find("img").eq(i).hasClass("fuel1");
+                var hasClass2 = $(".fuelBox").find("img").eq(i).hasClass("fuel2");
+                var hasClass3 = $(".fuelBox").find("img").eq(i).hasClass("fuel3");
+                if(hasClass1){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+                  // 设置得分位置
+                  // alert($(".air").css("left").split("px")[0])
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+15")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+                  $(".sourceP").html(sourceNum+15);
+                }else if(hasClass2){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+5")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+
+                  $(".sourceP").html(sourceNum+5);
+                }else if(hasClass3){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("-10")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },500);
+
+
+                  $(".sourceP").html(sourceNum-10);
+                }
+                $(".fuelBox").find("img").eq(i).remove();
+              }
+            }
+      }
+      fuelMove(4000);
+      fuelMove2(4000);
+      fuelMove3(4000);
+
+      // var set1 = setInterval(function creatImg(){
+      //   // var x = 12;
+      //   // var y = 2;
+      //   // var rand = parseInt(Math.random() * (x - y + 1) + y);
+      //   var randNumber = parseInt(Math.random() * 3+5);
+      //   // console.log(randNumber)
+      //   $(".fuelBox").append('<img src="images/fuel3.png" class="fuelImg fuel3" style="top:-30%;left:'+randNumber*1+'%;">')
+      //   fuelMove3(4000);
+      // },4500);
+      // var set2 = setInterval(function creatImg(){
+      //   var randNumber = parseInt(Math.random() * 3+5);
+      //   $(".fuelBox").append('<img src="images/fuel2.png" class="fuelImg fuel2" style="top:-30%;left:'+randNumber*3.4+'%;">')
+      //   fuelMove2(4000);
+      // },1525);
+      // var set3 = setInterval(function creatImg(){
+      //   var randNumber = parseInt(Math.random() * 3+5);
+      //   $(".fuelBox").append('<img src="images/fuel1.png" class="fuelImg fuel1" style="top:-30%;left:'+randNumber*6.125+'%;">')
+      //   fuelMove(4000);
+      // },3520);
+
+      var set1 = setInterval(function creatImg(){
+    	  var randNumber = parseInt(Math.random() * 5+1);
+    	  if (randNumber == 4) randNumber = 1;
+    	  if (randNumber == 5) randNumber = 2;
+    	  var randNumber2 = parseInt(Math.random() * 70+10);
+    	  $(".fuelBox").append('<img src="images/fuel'+randNumber+'.png" class="fuelImg fuel'+randNumber+'" style="top:-30%;left:'+randNumber2+'%;">')
+    	  if(randNumber==1)fuelMove(4000);
+    	  if(randNumber==2)fuelMove2(4000);
+    	  if(randNumber==3)fuelMove3(4000);
+      },600);
+
+      /* var set1 = setInterval(function creatImg(){
+        // var x = 12;
+        // var y = 2;
+        // var rand = parseInt(Math.random() * (x - y + 1) + y);
+        var randNumber = parseInt(Math.random() * 5+5);
+        // console.log(randNumber)
+        $(".fuelBox").append('<img src="images/fuel3.png" class="fuelImg fuel3" style="top:-30%;left:'+randNumber*1+'%;">')
+        fuelMove3(4000);
+      },4500);
+      var set2 = setInterval(function creatImg(){
+        var randNumber = parseInt(Math.random() * 5+5);
+        $(".fuelBox").append('<img src="images/fuel2.png" class="fuelImg fuel2" style="top:-30%;left:'+randNumber*4.4+'%;">')
+        fuelMove2(4000);
+      },1525);
+      var set3 = setInterval(function creatImg(){
+        var randNumber = parseInt(Math.random() * 5+5);
+        $(".fuelBox").append('<img src="images/fuel1.png" class="fuelImg fuel1" style="top:-30%;left:'+randNumber*7.125+'%;">')
+        fuelMove(4000);
+      },3520); */
+
+     var set11 = "";
+/*      var set22 = "";
+     var set33 = ""; */
+
+     function moveM1(movetime){
+         set11 = setInterval(function creatImg(){
+        	 var randNumber = parseInt(Math.random() * 5+1);
+       	  if (randNumber == 4) randNumber = 1;
+       	  if (randNumber == 5) randNumber = 2;
+       	  var randNumber2 = parseInt(Math.random() * 70+10);
+       	  $(".fuelBox").append('<img src="images/fuel'+randNumber+'.png" class="fuelImg fuel'+randNumber+'" style="top:-30%;left:'+randNumber2+'%;">')
+       	  if(randNumber==1)fuelMove(movetime);
+       	  if(randNumber==2)fuelMove2(movetime);
+       	  if(randNumber==3)fuelMove3(movetime);
+          },600);
+           /* set22 = setInterval(function creatImg(){
+            var randNumber = parseInt(Math.random() * 5+5);
+            $(".fuelBox").append('<img src="images/fuel2.png" class="fuelImg fuel2" style="top:-30%;left:'+randNumber*4.4+'%;">')
+            fuelMove2(movetime);
+          },1425);
+           set33 = setInterval(function creatImg(){
+            var randNumber = parseInt(Math.random() * 5+5);
+            $(".fuelBox").append('<img src="images/fuel1.png" class="fuelImg fuel1" style="top:-30%;left:'+randNumber*7.125+'%;">')
+            fuelMove(movetime);
+          },3320); */
+      }
+
+
+      var set111 = "";
+      /* var set222 = "";
+      var set333 = ""; */
+
+      function moveM2(movetime){
+         set111 = setInterval(function creatImg(){
+        	 var randNumber = parseInt(Math.random() * 5+1);
+       	  if (randNumber == 4) randNumber = 1;
+       	  if (randNumber == 5) randNumber = 2;
+       	  var randNumber2 = parseInt(Math.random() * 70+10);
+       	  $(".fuelBox").append('<img src="images/fuel'+randNumber+'.png" class="fuelImg fuel'+randNumber+'" style="top:-30%;left:'+randNumber2+'%;">')
+       	  if(randNumber==1)fuelMove(movetime);
+       	  if(randNumber==2)fuelMove2(movetime);
+       	  if(randNumber==3)fuelMove3(movetime);
+          },500);
+           /* set222 = setInterval(function creatImg(){
+            var randNumber = parseInt(Math.random() * 5+5);
+            $(".fuelBox").append('<img src="images/fuel2.png" class="fuelImg fuel2" style="top:-30%;left:'+randNumber*4.4+'%;">')
+            fuelMove2(movetime);
+          },1225);
+           set333 = setInterval(function creatImg(){
+            var randNumber = parseInt(Math.random() * 5+5);
+            $(".fuelBox").append('<img src="images/fuel1.png" class="fuelImg fuel1" style="top:-30%;left:'+randNumber*7.125+'%;">')
+            fuelMove(movetime);
+          },3020); */
+      }
+
+     var set1111 = "";
+     /* var set2222 = "";
+     var set3333 = ""; */
+
+      function moveM3(movetime){
+         set1111 = setInterval(function creatImg(){
+        	 var randNumber = parseInt(Math.random() * 5+1);
+       	  if (randNumber == 4) randNumber = 1;
+       	  if (randNumber == 5) randNumber = 2;
+       	  var randNumber2 = parseInt(Math.random() * 70+10);
+          	  $(".fuelBox").append('<img src="images/fuel'+randNumber+'.png" class="fuelImg fuel'+randNumber+'" style="top:-30%;left:'+randNumber2+'%;">')
+          	  if(randNumber==1)fuelMove(movetime);
+          	  if(randNumber==2)fuelMove2(movetime);
+          	  if(randNumber==3)fuelMove3(movetime);
+          },400);
+           /* set2222 = setInterval(function creatImg(){
+            var randNumber = parseInt(Math.random() * 5+5);
+            $(".fuelBox").append('<img src="images/fuel2.png" class="fuelImg fuel2" style="top:-30%;left:'+randNumber*4.4+'%;">')
+            fuelMove2(movetime);
+          },1025);
+           set3333 = setInterval(function creatImg(){
+            var randNumber = parseInt(Math.random() * 5+5);
+            $(".fuelBox").append('<img src="images/fuel1.png" class="fuelImg fuel1" style="top:-30%;left:'+randNumber*7.125+'%;">')
+            fuelMove(movetime);
+          },2710); */
+      }
+
+     var set11111 = "";
+     /* var set22222 = "";
+     var set33333 = ""; */
+
+      function moveM4(movetime){
+         set11111 = setInterval(function creatImg(){
+        	 var randNumber = parseInt(Math.random() * 5+1);
+       	  if (randNumber == 4) randNumber = 1;
+       	  if (randNumber == 5) randNumber = 2;
+       	  var randNumber2 = parseInt(Math.random() * 70+10);
+         	  $(".fuelBox").append('<img src="images/fuel'+randNumber+'.png" class="fuelImg fuel'+randNumber+'" style="top:-30%;left:'+randNumber2+'%;">')
+         	  if(randNumber==1)fuelMove(movetime);
+         	  if(randNumber==2)fuelMove2(movetime);
+         	  if(randNumber==3)fuelMove3(movetime);
+          },300);
+          /*  set22222 = setInterval(function creatImg(){
+            var randNumber = parseInt(Math.random() * 5+5);
+            $(".fuelBox").append('<img src="images/fuel2.png" class="fuelImg fuel2" style="top:-30%;left:'+randNumber*4.4+'%;">')
+            fuelMove2(movetime);
+          },925);
+           set33333 = setInterval(function creatImg(){
+            var randNumber = parseInt(Math.random() * 5+5);
+            $(".fuelBox").append('<img src="images/fuel1.png" class="fuelImg fuel1" style="top:-30%;left:'+randNumber*7.125+'%;">')
+            fuelMove(movetime);
+          },2503); */
+      }
+
+
+      $(".rankList").click(function(){
+        window.location.replace("ranking.html")
+      })
+
+
+
+  })
+function countSecond() {
+	  submitScore();
+	  setTimeout("countSecond()", 5000);
+  }
+function submitScore(){
+	  $.ajax({
+	  		url : "/saveHhUser",
+	  		data : JSON.stringify({
+	  			id : Storages.cookieStorage.get('uid')+"",
+	  			name : Storages.cookieStorage.get('name')+"",
+	  			mobile : Storages.cookieStorage.get('mobile')+"",
+	  			age : Storages.cookieStorage.get('age')+"",
+	  			cnid : Storages.cookieStorage.get('cnid')+"",
+	  			openid : Storages.cookieStorage.get('openid'),
+	  			nickname : Storages.cookieStorage.get('nickname')+"",
+	  			headimgurl : Storages.cookieStorage.get('headimgurl'),
+	  			game1:$(".sourceP").text()+""
+	  		}),
+	  		type : "POST",
+	  		async : true,
+	  		dataType : "json",
+	  		contentType : "application/json; charset=UTF-8",
+	  	}).done(
+	  			function(data) {
+	  				var msg = JSON.parse(data.message);
+	  				Storages.cookieStorage.setConf({path:'/',expires:100}).set('uid',msg.id);
+	  			}).fail(
+	  			function(xhr, status, errorThrown) {
+	  				alert("Sorry, there was a problem! " + "Error: " + errorThrown
+	  						+ "Status: " + status);
+	  				console.log("Error: " + errorThrown);
+	  				console.log("Status: " + status);
+	  				console.dir(xhr);
+	  			}).always(function(xhr, status) {
+	  		console.log("The request is complete!");
+	  	});
+}
+</script>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Go</title>
+    <!-- 设置 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+        body{
+            font-family:'Microsoft Yahei','Simsun';
+            color:#333;
+        }
+        input{
+          outline: none;
+        }
+        html,body{
+          width:100%;
+          height: 100%;
+          padding:0;
+          margin:0;
+        }
+        .content_box{
+          width: 100%;
+          height: 100%;
+          background: url(images/game2bg.png) 0 0 no-repeat;
+          background-size: 100% 100%;
+        }
+        .main{
+          width: 100%;
+          overflow:hidden;
+          height: 100%;
+        }
+        .meterBox{
+          width:80%;
+          overflow:hidden;
+          position: relative;
+          margin-top: 20%;
+          left: 10%;
+        }
+        .meter{
+          width: 100%;
+        }
+        .handle{
+          width: 68%;
+          position: absolute;
+          bottom:5%;
+          left: 16%;
+          transform-origin:bottom  right;
+        }
+        .meterNum{
+          width: 120px;
+          height: 40px;
+          background: rgba(255,255,255,0.4);
+          text-align: center;
+          line-height: 40px;
+          color: #7252DF;
+          font-size: 20px;
+          margin: 10px auto;
+          font-weight: bold;
+          font-family: "AGENCYB";
+        }
+        .go{
+          width: 40%;
+          display:block;
+          margin: 15% auto 0;
+        }
+        .time{
+          position: absolute;
+          display:inline-block;
+          top: 20px;
+          right: 20px;
+          color: #fff;
+          font-size: 18px;
+          font-family: "AGENCYB";
+          display:none;
+        }
+        .moduleBox{
+          width: 100%;
+          height: 100%;
+          position: fixed;
+          top: 0;
+          left: 0;
+          background: rgba(0,0,0,0.5);
+          display:none;
+        }
+        .moduleMain{
+          width: 75%;
+          overflow:hidden;
+          position: relative;
+          top:50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+        }
+        .moduleImg{
+          width: 100%;
+        }
+        .moduleHtml{
+          width: 100%;
+          position: absolute;
+          left: 0;
+          top: 45%;
+        }
+        .p1{
+          width: 100%;
+          text-align: center;
+          font-size: 25px;
+          color: #000;
+          margin: 0;
+        }
+        .p2{
+          width: 100%;
+          text-align: center;
+          font-size: 25px;
+          color: #fff;
+          margin: 0;
+          margin-top: 15px;
+          font-family: "AGENCYB";
+        }
+        .delete{
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 20px;
+        }
+        .rankList{
+          margin-top: 3%;
+          width: 100%;
+          display: block;
+          overflow: hidden;
+          outline-style: none;
+          text-align: center;
+        }
+        .rankList img{
+          width: 60%;
+        }
+        .goAnimate{
+          -webkit-animation: scaleDraw 4s ease-in-out infinite;
+        }
+            @keyframes scaleDraw {  /*定义关键帧、scaleDrew是需要绑定到选择器的关键帧名称*/
+                0%{
+                    transform: scale(1);  /*开始为原始大小*/
+                }
+                25%{
+                    transform: scale(1.2); /*放大1.1倍*/
+                }
+                50%{
+                    transform: scale(1);
+                }
+                75%{
+                    transform: scale(1.2);
+                }
+            }
+            .m1,.m2,.m3,.m4,.m5,.m6,.m7,.m8,.m11,.m22,.m33,.m44,.m55,.m66,.m77,.m88{
+              width: 100%;
+              position: absolute;
+              top: 35%;
+              left: 0;
+              text-align: center;
+              color: red;
+              font-size: 40px;
+              margin: 0;
+              display:none;
+            }
+
+            .module{
+              width: 100%;
+              height: 100%;
+              position: fixed;
+              top: 0;
+              left: 0;
+              background: rgba(0,0,0,0.6);
+              display:none;
+            }
+            .module img{
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%,-50%);
+              position: absolute;
+              width: 80%;
+            }
+
+             @charset "UTF-8";
+
+            @font-face {
+              font-family: "AGENCYB";
+              src: url("../game1/font/AGENCYB.woff2") format("woff2"),
+                   url("../game1/font/AGENCYB.woff") format("woff"),
+                   url("../game1/font/AGENCYB.ttf") format("truetype"),
+                   url("../game1/font/AGENCYB.eot") format("embedded-opentype"),
+                   url("../game1/font/AGENCYB.svg") format("svg");
+              font-weight: normal;
+              font-style: normal;
+            }
+
+            .threeT{
+              width: 100%;
+              font-size: 40px;
+              font-family: "AGENCYB";
+              color: #fff;
+              text-align: center;
+              position: fixed;
+              top:45%;
+              left: 0;
+              /*transform: translate(-50%,-50%);*/
+              -webkit-animation: scaleDraw2 1s ease-in-out infinite;
+            }
+            @keyframes scaleDraw2 {  /*定义关键帧、scaleDrew是需要绑定到选择器的关键帧名称*/
+                0%{
+                    transform: scale(1);  /*开始为原始大小*/
+                }
+                25%{
+                    transform: scale(3); /*放大1.1倍*/
+                }
+                50%{
+                    transform: scale(1);
+                }
+                75%{
+                    transform: scale(3);
+                }
+            }
+
+    </style>
+</head>
+<body>
+ <div class="content_box" id="main">
+   <div class="main">
+    <div class="meterBox">
+      <img src="images/meter.png" class="meter">
+      <img src="images/handle.png" class="handle">
+    </div>
+    <div class="meterNum">0</div>
+    <img src="images/go.png" class="go">
+   </div>
+   <span class="time">45秒</span>
+   <img src="images/m1.png"  class="m1">
+     <img src="images/m1.png"  class="m11">
+   <img src="images/m2.png"  class="m2">
+     <img src="images/m1.png"  class="m22">
+   <img src="images/m3.png"  class="m3">
+     <img src="images/m1.png"  class="m33">
+   <img src="images/m4.png"  class="m4">
+     <img src="images/m1.png"  class="m44">
+   <img src="images/m5.png"  class="m5">
+     <img src="images/m1.png"  class="m55">
+   <img src="images/m6.png"  class="m6">
+     <img src="images/m1.png"  class="m66">
+   <img src="images/m7.png"  class="m7">
+     <img src="images/m1.png"  class="m77">
+   <img src="images/m8.png"  class="m8">
+     <img src="images/m1.png"  class="m88">
+ </div>
+ <div class="module">
+   <img src="images/1111.png">
+ </div>
+ <!-- 三秒倒计时 -->
+<div class="threeT">3</div>
+ <!-- 遮罩框 -->
+ <div class="moduleBox">
+   <div class="moduleMain">
+     <img src="images/module.png" class="moduleImg">
+     <div class="moduleHtml">
+       <p class="p1">您的飞行速度</p>
+       <p class="p2">600马力</p>
+     </div>
+     <b class="rankList"><img src="images/rankList.png"></b>
+
+   </div>
+   <img src="images/delete.png" class="delete">
+ </div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.rotate.min.js"></script>
+<script src="../../data-js/js.cookie.js"></script>
+<script src="../../data-js/js.storage.min.js"></script>
+<script type="text/javascript">
+Storages.alwaysUseJsonInStorage(true);
+var openid = Storages.cookieStorage.get('openid');
+var nickname = Storages.cookieStorage.get('nickname');
+var headimgurl = Storages.cookieStorage.get('headimgurl');
+var name = Storages.cookieStorage.get('name');
+var mobile = Storages.cookieStorage.get('mobile');
+var age = Storages.cookieStorage.get('age');
+var cnid = Storages.cookieStorage.get('cnid');
+var uid = Storages.cookieStorage.get('uid');
+if(!uid) uid = "";
+$.ajax({
+	url : "/saveHhUser",
+	data : JSON.stringify({
+		id : uid+"",
+		name : name+"",
+		mobile : mobile+"",
+		age : age+"",
+		cnid : cnid+"",
+		openid : openid,
+		nickname : nickname+"",
+		headimgurl : headimgurl
+	}),
+	type : "POST",
+	async : true,
+	dataType : "json",
+	contentType : "application/json; charset=UTF-8",
+}).done(
+		function(data) {
+			var msg = JSON.parse(data.message);
+			Storages.cookieStorage.setConf({path:'/',expires:100}).set('uid',msg.id);
+			setTimeout("countSecond()", 5000);
+		}).fail(
+		function(xhr, status, errorThrown) {
+			alert("Sorry, there was a problem! " + "Error: " + errorThrown
+					+ "Status: " + status);
+			console.log("Error: " + errorThrown);
+			console.log("Status: " + status);
+			console.dir(xhr);
+		}).always(function(xhr, status) {
+	console.log("The request is complete!");
+});
+
+
+  $(".rankList").click(function(){
+    window.location.replace("../game1/ranking2.html")
+  })
+
+
+  var meter = 0;
+  // $(".module").fadeIn(2000,function(){
+    // $(".module").fadeOut(3000);
+
+  // });
+
+
+// 三秒倒计时
+  var threeT =3;
+  var threeTime = setInterval(function(){
+       if (threeT == 1) {
+            clearInterval(threeTime);
+            $(".threeT").hide();
+            //$(".go").addClass('goAnimate');
+
+            // 点击事件
+             $(".go").click(function(){
+
+              $(".go").animate({width:"43%"},50);
+              setTimeout(function(){
+                 $(".go").animate({width:"40%"},50);
+              },120)
+
+                meter+=0.22;
+                // $(".meterNum").html(meter*4.5);
+                $(".meterNum").html(Math.ceil(meter*4.5))
+                 if(meter >=180){
+                  $(".m88").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m88").fadeOut();
+                        $(".m88").remove();
+                    }, 1200);
+                    });
+                  clearInterval(time);
+                  clearInterval(time1);
+                  $(".time").hide();
+                  $(".moduleBox").show();
+                  $(".p2").html(Math.ceil(meter*4.5)+"马力");
+                  //submitScore();
+                  $('.go').unbind('click');
+                  $('#handle').rotate({angle: 180});
+                }else if(meter >=168.75){
+                  $(".m8").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m8").fadeOut();
+                        $(".m8").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=157.5){
+                    $(".m77").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m77").fadeOut();
+                        $(".m77").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=146.25){
+                    $(".m7").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m7").fadeOut();
+                        $(".m7").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=135){
+                    $(".m66").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m66").fadeOut();
+                        $(".m66").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=123.75){
+                    $(".m6").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m6").fadeOut();
+                        $(".m6").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=112.5){
+                    $(".m55").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m55").fadeOut();
+                        $(".m55").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=101.25){
+                    $(".m5").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m5").fadeOut();
+                        $(".m5").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=90){
+                    $(".m44").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m44").fadeOut();
+                        $(".m44").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=78.75){
+                    $(".m4").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m4").fadeOut();
+                        $(".m4").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=67.5){
+                    $(".m33").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m33").fadeOut();
+                        $(".m33").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=56.25){
+                    $(".m3").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m3").fadeOut();
+                        $(".m3").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=45){
+                     $(".m22").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m22").fadeOut();
+                        $(".m22").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=33.75){
+                    $(".m2").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m2").fadeOut();
+                        $(".m2").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=22.5){
+                    $(".m11").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m11").fadeOut();
+                        $(".m11").remove();
+                    }, 1200);
+                    });
+                }else if(meter >=11.25){
+                    $(".m1").fadeIn(500,function(){
+                      setTimeout(function(){
+                        $(".m1").fadeOut();
+                        $(".m1").remove();
+                    }, 1200);
+                    });
+                }else{
+                    //$('.handle').rotate({animateTo: meter});
+
+                }
+                $('.handle').rotate({animateTo: meter+20});
+                console.log(meter);
+             })
+
+              // 45秒倒计时
+              $(".time").show();
+              var wait=45;
+              var time = setInterval(function(){
+                 if (wait == 0) {
+                      clearInterval(time);
+                      clearInterval(time1);
+                      $(".time").hide();
+                      $(".moduleBox").show();
+                      $(".p2").html(Math.ceil(meter*4.5)+"马力");
+                      submitScore();
+                      $('.go').unbind('click');
+                  } else {
+                      wait--;
+                      $(".time").html(wait+"秒")
+                  }
+              },1000);
+
+
+
+        } else {
+            threeT--;
+            // alert(threeT)
+            // $(".threeT").css("transform","scale(2)")
+            $(".threeT").html(threeT)
+        }
+    },1000);
+
+
+  var time1 = setInterval(function(){
+    meter-=0.11;
+
+    if(meter>0){
+      $('.handle').rotate({animateTo: meter});
+      // $(".meterNum").html(meter*4.5)
+      $(".meterNum").html(Math.ceil(meter*4.5))
+    }else{
+      meter=0;
+      $(".meterNum").html("0");
+    }
+  }, 500);
+
+
+    // 删除模态框
+    $(".delete").click(function(){
+      $(".moduleBox").hide();
+    })
+
+    //禁止下拉及默认滑动动作
+      document.getElementById("main").addEventListener('touchmove',e,false);
+      function e(event){
+        event.preventDefault();
+      }
+
+
+    function countSecond() {
+    	  submitScore();
+    	  setTimeout("countSecond()", 5000);
+      }
+    function submitScore(){
+    	  $.ajax({
+    	  		url : "/saveHhUser",
+    	  		data : JSON.stringify({
+    	  			id : Storages.cookieStorage.get('uid')+"",
+    	  			name : Storages.cookieStorage.get('name')+"",
+    	  			mobile : Storages.cookieStorage.get('mobile')+"",
+    	  			age : Storages.cookieStorage.get('age')+"",
+    	  			cnid : Storages.cookieStorage.get('cnid')+"",
+    	  			openid : Storages.cookieStorage.get('openid'),
+    	  			nickname : Storages.cookieStorage.get('nickname')+"",
+    	  			headimgurl : Storages.cookieStorage.get('headimgurl'),
+    	  			game2:$(".meterNum").text()+""
+    	  		}),
+    	  		type : "POST",
+    	  		async : true,
+    	  		dataType : "json",
+    	  		contentType : "application/json; charset=UTF-8",
+    	  	}).done(
+    	  			function(data) {
+    	  				var msg = JSON.parse(data.message);
+    	  				Storages.cookieStorage.setConf({path:'/',expires:100}).set('uid',msg.id);
+    	  			}).fail(
+    	  			function(xhr, status, errorThrown) {
+    	  				alert("Sorry, there was a problem! " + "Error: " + errorThrown
+    	  						+ "Status: " + status);
+    	  				console.log("Error: " + errorThrown);
+    	  				console.log("Status: " + status);
+    	  				console.dir(xhr);
+    	  			}).always(function(xhr, status) {
+    	  		console.log("The request is complete!");
+    	  	});
+    }
+</script>
+</html>

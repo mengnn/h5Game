@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>开始</title>
+    <!-- 设置 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+        body{
+            font-family:'Microsoft Yahei','Simsun';
+            color:#333;
+        }
+        input{
+          outline: none;
+        }
+        html,body{
+          width:100%;
+          height: 100%;
+          padding:0;
+          margin:0;
+        }
+        .content_box{
+          width: 100%;
+          height: 100%;
+          background: url(images/bg3.jpg) 0 0 no-repeat;
+          background-size: 100% 100%;
+        }
+        .main{
+          width: 100%;
+          overflow:hidden;
+          max-height: 100%;
+        }
+        .logo1{
+          width: 85%;
+          margin: 0 auto;
+          display: block;
+          margin-top: 15%;
+        }
+        .btn1{
+          margin-top: 6%;
+          width: 100%;
+          display:block;
+          overflow:hidden;
+          outline-style: none;
+        }
+        .btn1 img{
+          width: 100%;
+        }
+        a{
+          -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+          -webkit-user-select: none;
+          -moz-user-focus: none;
+          -moz-user-select: none;
+        }
+        .btn1{
+          -webkit-animation: scaleDraw 4s ease-in-out infinite;
+        }
+            @keyframes scaleDraw {  /*定义关键帧、scaleDrew是需要绑定到选择器的关键帧名称*/
+                0%{
+                    transform: scale(1);  /*开始为原始大小*/
+                }
+                25%{
+                    transform: scale(1.2); /*放大1.1倍*/
+                }
+                50%{
+                    transform: scale(1);
+                }
+                75%{
+                    transform: scale(1.2);
+                }
+            }
+
+            @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+              .btn1{
+                  margin-top: 10%;
+                }
+            }
+            @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio:2) {
+              .btn1{
+                  margin-top: 10%;
+                }
+            }
+
+    </style>
+</head>
+<body>
+ <div class="content_box" id="main">
+   <div class="main">
+     <img src="images/logo3.png" class="logo1">
+     <b  class="btn1">
+       <img src="images/start.png">
+     </b>
+   </div>
+ </div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+
+      //禁止下拉及默认滑动动作
+      document.getElementById("main").addEventListener('touchmove',e,false);
+      function e(event){
+        event.preventDefault();
+      }
+
+      $(".btn1").click(function(){
+        window.location.replace("game.html")
+      })
+</script>
+</html>

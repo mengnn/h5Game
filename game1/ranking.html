@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>排名</title>
+    <!-- 设置 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+        body{
+            font-family:'Microsoft Yahei','Simsun';
+            color:#333;
+        }
+        input{
+          outline: none;
+        }
+        html,body{
+          width:100%;
+          height: 100%;
+          padding:0;
+          margin:0;
+        }
+        .content_box{
+          width: 100%;
+          height: 100%;
+          background: url(images/bg1.jpg) 0 0 no-repeat;
+          background-size: 100% 100%;
+        }
+        .main{
+          width: 100%;
+          overflow:hidden;
+          max-height: 100%;
+        }
+        .ranking{
+          width: 72%;
+          margin: 0 auto;
+          display: block;
+        }
+        .rangbtn{
+          margin-top: 1%;
+          width: 100%;
+          text-align: center;
+          display:block;
+          overflow:hidden;
+        }
+        a{
+          -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+          -webkit-user-select: none;
+          -moz-user-focus: none;
+          -moz-user-select: none;
+        }
+        .logoBox{
+          width: 100%;
+          overflow:hidden;
+          margin-top: 15%;
+          position: relative;
+        }
+        .rankingTitle{
+          position: absolute;
+          width: 100%;
+          text-align: center;
+          color: #fff;
+          font-size: 16px;
+          top: 1.5%;
+          left: 0;
+          padding: 0;
+          margin: 0;
+        }
+        .rankList{
+          width: 64%;
+          overflow:hidden;
+          position: absolute;
+          left: 18%;
+          top: 12%;
+          border-collapse: collapse;
+        }
+        .rankList tr:nth-child(1){
+          background: #7252DF;
+        }
+        .rankList tr:nth-child(2){
+          background: #0FDCDF;
+        }
+        .rankList tr:nth-child(3){
+          background: #457EFF;
+        }
+        .rankList tr{
+          width: 100%;
+        }
+        .rankList tr td{
+          border-bottom: 1px solid #fff;
+          height: 33px;
+          color: #fff;
+          font-size: 16px;
+
+        }
+        .rankList tr td p{
+          width: 98%;
+          margin: 0 auto;
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
+        }
+        .rankList tr td:nth-child(1){
+          width:15%;
+          font-size: 20px;
+          text-indent: 5px;
+        }
+        .rankList tr td:nth-child(2){
+          width:20%;
+        }
+        .rankList tr td:nth-child(2) img{
+          width:28px;
+          height: 28px;
+          vertical-align: top;
+        }
+        .rankList tr td:nth-child(3){
+          width:35%;
+        }
+        .rankList tr td:nth-child(4){
+          width:30%;
+        }
+
+        @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+              .rangbtn{
+                  margin-top: 5%;
+                }
+            }
+            @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio:2) {
+              .rangbtn{
+                  margin-top: 5%;
+                }
+            }
+
+    </style>
+</head>
+<body>
+ <div class="content_box" id="main">
+   <div class="main">
+     <div class="logoBox">
+       <img src="images/ranking.png" class="ranking">
+       <p class="rankingTitle"><!-- 你排名3750，未进入排行榜    恭喜你，排到第7名-->排行榜</p>
+       <table class="rankList">
+         <!-- <tr>
+           <td>1</td>
+           <td>
+             <img src="images/img.png" class="personImg">
+           </td>
+           <td>
+             <p>孟繁胜游</p>
+           </td>
+           <td>
+             1200
+           </td>
+         </tr>
+         <tr>
+           <td>2</td>
+           <td>
+             <img src="images/img.png" class="personImg">
+           </td>
+           <td>
+             <p>孟繁胜游孟繁胜游</p>
+           </td>
+           <td>
+             1200
+           </td>
+         </tr>
+         <tr>
+           <td>3</td>
+           <td>
+             <img src="images/img.png" class="personImg">
+           </td>
+           <td>
+             <p>孟繁胜游</p>
+           </td>
+           <td>
+             1200
+           </td>
+         </tr>
+         <tr>
+           <td>4</td>
+           <td>
+             <img src="images/img.png" class="personImg">
+           </td>
+           <td>
+             <p>孟繁胜游</p>
+           </td>
+           <td>
+             1200
+           </td>
+         </tr>
+         <tr>
+           <td>5</td>
+           <td>
+             <img src="images/img.png" class="personImg">
+           </td>
+           <td>
+             <p>孟繁胜游</p>
+           </td>
+           <td>
+             1200
+           </td>
+         </tr>
+         <tr>
+           <td>6</td>
+           <td>
+             <img src="images/img.png" class="personImg">
+           </td>
+           <td>
+             <p>孟繁胜游</p>
+           </td>
+           <td>
+             1200
+           </td>
+         </tr>
+         <tr>
+           <td>7</td>
+           <td>
+             <img src="images/img.png" class="personImg">
+           </td>
+           <td>
+             <p>孟繁胜游</p>
+           </td>
+           <td>
+             1200
+           </td>
+         </tr>
+         <tr>
+           <td>8</td>
+           <td>
+             <img src="images/img.png" class="personImg">
+           </td>
+           <td>
+             <p>孟繁胜游</p>
+           </td>
+           <td>
+             1200
+           </td>
+         </tr>
+         <tr>
+           <td>9</td>
+           <td>
+             <img src="images/img.png" class="personImg">
+           </td>
+           <td>
+             <p>孟繁胜游</p>
+           </td>
+           <td>
+             1200
+           </td>
+         </tr>
+         <tr>
+           <td>10</td>
+           <td>
+             <img src="images/img.png" class="personImg">
+           </td>
+           <td>
+             <p>孟繁胜游</p>
+           </td>
+           <td>
+             1200
+           </td>
+         </tr> -->
+       </table>
+     </div>
+     <div class="rangbtn">
+       <img src="images/rankbtn1.png" class="rangbtn1" style="width: 50%;" >
+       <img src="images/rankbtn2.png" class="rangbtn2" style="width: 35%;margin-right: 10px;display:none">
+       <img src="images/rankbtn3.png" class="rangbtn3" style="width: 35%;display:none">
+     </div>
+   </div>
+ </div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="../../data-js/js.cookie.js"></script>
+<script src="../../data-js/js.storage.min.js"></script>
+<script src="../../data-js/hh-ranking.js"></script>
+<script type="text/javascript">
+ //返回上一页
+ $(".rangbtn1").click(function(){
+    window.location.replace("login.html")
+ })
+ // 返回目录
+ $(".rangbtn2").click(function(){
+    window.location.replace("login.html")
+ })
+ // 查看奖品
+ $(".rangbtn3").click(function(){
+    window.location.replace("prize.html")
+ })
+
+
+      //禁止下拉及默认滑动动作
+      document.getElementById("main").addEventListener('touchmove',e,false);
+      function e(event){
+        event.preventDefault();
+      }
+</script>
+</html>

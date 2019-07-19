@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Go</title>
+    <!-- 设置 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+        body{
+            font-family:'Microsoft Yahei','Simsun';
+            color:#333;
+        }
+        input{
+          outline: none;
+        }
+        html,body{
+          width:100%;
+          height: 100%;
+          padding:0;
+          margin:0;
+        }
+        .content_box{
+          width: 100%;
+          height: 100%;
+          background: url(images/game1.png) 0 0 no-repeat;
+          background-size: 100% 100%;
+        }
+        .mainTime{
+          width: 80%;
+          overflow:hidden;
+          position: relative;
+          top: 8%;
+          left: 10%;
+        }
+        .timeBox{
+          width: 100%;
+        }
+        .timeList{
+          width: 80%;
+          height: 30%;
+          background: url(images/timeList.png) 0 0 no-repeat;
+          background-size: 100% 100%;
+          position: absolute;
+          right: 17%;
+          top: 26%;
+          text-align: center;
+          line-height: 115%;
+        }
+
+
+        .time{
+          position: absolute;
+          display:inline-block;
+          top: 20px;
+          right: 20px;
+          color: #fff;
+          font-size: 18px;
+        }
+        .moduleBox{
+          width: 100%;
+          height: 100%;
+          position: fixed;
+          top: 0;
+          left: 0;
+          background: rgba(0,0,0,0.5);
+          display:none;
+          z-index: 111111111;
+        }
+        .moduleMain{
+          width: 75%;
+          overflow:hidden;
+          position: relative;
+          top:50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+        }
+        .moduleImg{
+          width: 100%;
+        }
+        .moduleHtml{
+          width: 100%;
+          position: absolute;
+          left: 0;
+          top: 45%;
+        }
+        .p1{
+          width: 100%;
+          text-align: center;
+          font-size: 25px;
+          color: #000;
+          margin: 0;
+        }
+        .p2{
+          width: 100%;
+          text-align: center;
+          font-size: 25px;
+          color: #fff;
+          margin: 0;
+          margin-top: 15px;
+        }
+        .delete{
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 20px;
+        }
+        .rankList{
+          margin-top: 3%;
+          width: 100%;
+          display: block;
+          overflow: hidden;
+          outline-style: none;
+          text-align: center;
+        }
+        .rankList img{
+          width: 60%;
+        }
+        .air{
+          width: 16%;
+          position: absolute;
+          bottom: 5%;
+          left: 42%;
+          z-index: 125;
+        }
+        .fuelBox{
+           position: relative;
+           left: 0;
+           top: 0%;
+           width: 100%;
+           height: 80%;
+           overflow: hidden;
+        }
+        .fuel1{
+          width: 16%;
+          position: absolute;
+          top: 5%;
+          left: 40%;
+        }
+        .fuel2{
+          width: 11%;
+          position: absolute;
+          top: 15%;
+          left: 10%;
+        }
+        .fuel3{
+          width: 10%;
+          position: absolute;
+          top: 25%;
+          left: 70%;
+        }
+        .sourceBox{
+          position: relative;
+          top: 8%;
+          float: right;
+          right: 10%;
+          width: 25%;
+          z-index: 11111111;
+        }
+        .sourceImg{
+          width: 100%;
+        }
+        .sourceP{
+          position: absolute;
+          color: #fff;
+          top: 25%;
+          left: 20%;
+
+        }
+        .fuelBox img{
+          z-index: 125;
+        }
+        .getNum{
+          display:inline-block;
+          position: absolute;
+          top: 50px;
+          left: 30px;
+          width: 80px;
+          height: 30px;
+          font-size: 30px;
+          color: #fff;
+          display:none;
+        }
+
+    </style>
+</head>
+<body>
+ <div class="content_box" id="main">
+  <div class="mainTime">
+    <img src="images/timeBox.png" class="timeBox">
+    <div class="timeList">60</div>
+  </div>
+  <!-- 容器 -->
+  <div class="sourceBox">
+    <img src="images/source.png" class="sourceImg">
+    <span class="sourceP"></span>
+  </div>
+  <!-- 燃料 -->
+  <div class="fuelBox">
+    <img src="images/fuel2.png" class="fuelImg fuel2">
+    <img src="images/fuel1.png" class="fuelImg fuel1">
+    <img src="images/fuel3.png" class="fuelImg fuel3">
+  </div>
+   <!-- 飞机 -->
+   <img src="images/air.png" class="air">
+   <!-- 得分 -->
+   <div class="getNum">+150</div>
+ </div>
+ <!-- 遮罩框 -->
+ <div class="moduleBox">
+   <div class="moduleMain">
+     <img src="images/module.png" class="moduleImg">
+     <div class="moduleHtml">
+       <p class="p1">您的助燃数</p>
+       <p class="p2">600L</p>
+     </div>
+     <a href="ranking.html" class="rankList"><img src="images/rankList.png"></a>
+   </div>
+   <img src="images/delete.png" class="delete">
+ </div>
+</body>
+<script type="text/javascript" src="js/jquery1.7.2.js"></script>
+<script type="text/javascript">
+  $(function(){
+    // 拖拽
+    var cont=$(".air");
+    var contW=$(".air").width();
+    var contH=$(".air").height();
+    var startX,startY,sX,sY,moveX,moveY, disX, disY;
+    var winW=$(window).width();
+    var winH=$(window).height();
+    cont.on({//绑定事件
+        touchstart:function(e){
+            startX = e.originalEvent.targetTouches[0].pageX;    //获取点击点的X坐标
+            startY = e.originalEvent.targetTouches[0].pageY;    //获取点击点的Y坐标
+            //console.log("startX="+startX+"************startY="+startY);
+            sX=$(this).offset().left;//相对于当前窗口X轴的偏移量
+            sY=$(this).offset().top;//相对于当前窗口Y轴的偏移量
+            //console.log("sX="+sX+"***************sY="+sY);
+            leftX=startX-sX;//鼠标所能移动的最左端是当前鼠标距div左边距的位置
+            rightX=winW-contW+leftX;//鼠标所能移动的最右端是当前窗口距离减去鼠标距div最右端位置
+            topY=startY-sY;//鼠标所能移动最上端是当前鼠标距div上边距的位置
+            bottomY=winH-contH+topY;//鼠标所能移动最下端是当前窗口距离减去鼠标距div最下端位置
+            },
+        touchmove:function(e){
+            e.preventDefault();
+            moveX=e.originalEvent.targetTouches[0].pageX;//移动过程中X轴的坐标
+            moveY=e.originalEvent.targetTouches[0].pageY;//移动过程中Y轴的坐标
+            //console.log("moveX="+moveX+"************moveY="+moveY);
+            if(moveX<leftX){moveX=leftX;}
+            if(moveX>rightX){moveX=rightX;}
+            if(moveY<topY){moveY=topY;}
+            if(moveY>bottomY){moveY=bottomY;}
+            $(this).css({
+                "left":moveX+sX-startX,
+                "top":moveY+sY-startY,
+            });
+
+            // var sourceNum = 0;
+
+            for(var i=0;i<$(".fuelBox").find("img").length;i++){
+
+              console.log(isOverlap(".air",$(".fuelBox").find("img").eq(i)));
+              if(isOverlap(".air",$(".fuelBox").find("img").eq(i))){
+                var hasClass1 = $(".fuelBox").find("img").eq(i).hasClass("fuel1");
+                var hasClass2 = $(".fuelBox").find("img").eq(i).hasClass("fuel2");
+                var hasClass3 = $(".fuelBox").find("img").eq(i).hasClass("fuel3");
+                if(hasClass1){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+                  // 设置得分位置
+                  // alert($(".air").css("left").split("px")[0])
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+150")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+                  $(".sourceP").html(sourceNum+150);
+                }else if(hasClass2){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+100")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+
+                  $(".sourceP").html(sourceNum+100);
+                }else if(hasClass3){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+50")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },500);
+
+
+                  $(".sourceP").html(sourceNum+50);
+                }
+                $(".fuelBox").find("img").eq(i).remove();
+              }
+            }
+
+
+        },
+        mousedown: function(ev){
+            var patch = parseInt($(this).css("height"))/2;
+            //console.log(patch);
+            $(this).mousemove(function(ev){
+                var oEvent = ev || event;
+                //console.log(oEvent.target);
+                var oX = oEvent.clientX;
+                var oY = oEvent.clientY;
+                var t = oY - patch;
+                var l = oX - patch;
+                var w = $(window).width() - $(this).width();
+                var h = $(window).height() - $(this).height();
+                if(t<0){t = 0}
+                if(l<0){l=0}
+                if(t>h){t=h}
+                if(l>w){l=w}
+                $(this).css({top:t,left:l})
+            });
+            $(this).mouseup(function(){
+                $(this).unbind('mousemove');
+            });
+        }
+    });
+
+    // function isOverlap(idOne,idTwo){
+    //     var objOne=$("."+idOne),
+    //         objTwo=$(idTwo),
+    //         offsetOne = objOne.offset(),
+    //         offsetTwo = objTwo.offset(),
+    //         topOne=offsetOne.top,
+    //         topTwo=offsetTwo.top,
+    //         leftOne=offsetOne.left,
+    //         leftTwo=offsetTwo.left,
+    //         widthOne = objOne.width(),
+    //         widthTwo = objTwo.width(),
+    //         heightOne = objOne.height(),
+    //         heightTwo = objTwo.height();
+    //     var leftTop = leftTwo > leftOne && leftTwo < leftOne+widthOne
+    //             && topTwo > topOne && topTwo < topOne+heightOne,
+    //         rightTop = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne
+    //             && topTwo > topOne && topTwo < topOne+heightOne,
+    //         leftBottom = leftTwo > leftOne && leftTwo < leftOne+widthOne
+    //             && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne,
+    //         rightBottom = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne
+    //             && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne;
+    //     return leftTop || rightTop || leftBottom || rightBottom;
+    //     if(leftTop || rightTop || leftBottom || rightBottom){
+    //       //$("."+idTwo).hide();
+    //       //$("."+idTwo).addClass(".act");
+    //     }
+    // }
+
+    function isOverlap(airObj,sourceObj){
+        var objOne=$(airObj),
+            objTwo=sourceObj,
+            offsetOne = objOne.offset(),
+            offsetTwo = objTwo.offset(),
+            topOne=offsetOne.top,
+            topTwo=offsetTwo.top,
+            leftOne=offsetOne.left,
+            leftTwo=offsetTwo.left,
+            widthOne = objOne.width(),
+            widthTwo = objTwo.width(),
+            heightOne = objOne.height(),
+            heightTwo = objTwo.height();
+        var leftTop = leftTwo > leftOne && leftTwo < leftOne+widthOne
+                && topTwo > topOne && topTwo < topOne+heightOne,
+            rightTop = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne
+                && topTwo > topOne && topTwo < topOne+heightOne,
+            leftBottom = leftTwo > leftOne && leftTwo < leftOne+widthOne
+                && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne,
+            rightBottom = leftTwo+widthTwo > leftOne && leftTwo+widthTwo < leftOne+widthOne
+                && topTwo+heightTwo > topOne && topTwo+heightTwo < topOne+heightOne;
+        return leftTop || rightTop || leftBottom || rightBottom;
+        if(leftTop || rightTop || leftBottom || rightBottom){
+          //$("."+idTwo).hide();
+          //$("."+idTwo).addClass(".act");
+        }
+    }
+
+
+
+      // 删除模态框
+    $(".delete").click(function(){
+      $(".moduleBox").hide();
+    });
+    // 60秒倒计时
+    var wait=60;
+    var time = setInterval(function(){
+       if (wait == 0) {
+        var meter = $(".sourceP").text();
+            clearInterval(time);
+            $(".timeList").hide();
+            $(".moduleBox").show();
+            $(".fuelBox").hide();
+            $(".p2").html(meter+"L");
+        } else {
+            wait--;
+            $(".timeList").html(wait);
+            var timeW = 80*wait/60;
+            //console.log(timeW);
+            $(".timeList").css("width",timeW+"%")
+        }
+    },1000);
+
+
+      //禁止下拉及默认滑动动作
+      document.getElementById("main").addEventListener('touchmove',e,false);
+      function e(event){
+        event.preventDefault();
+      }
+
+      // 燃料移动
+      function fuelMove(){
+        $(".fuel1").animate({top:"100%"},5000,"linear",function(){
+          $(this).remove();
+        });
+        for(var i=0;i<$(".fuelBox").find("img").length;i++){
+              // console.log(isOverlap(".air",$(".fuelBox").find("img").eq(i)));
+              if(isOverlap(".air",$(".fuelBox").find("img").eq(i))){
+                var hasClass1 = $(".fuelBox").find("img").eq(i).hasClass("fuel1");
+                var hasClass2 = $(".fuelBox").find("img").eq(i).hasClass("fuel2");
+                var hasClass3 = $(".fuelBox").find("img").eq(i).hasClass("fuel3");
+                if(hasClass1){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+                  // 设置得分位置
+                  // alert($(".air").css("left").split("px")[0])
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+150")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+                  $(".sourceP").html(sourceNum+150);
+                }else if(hasClass2){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+100")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+
+                  $(".sourceP").html(sourceNum+100);
+                }else if(hasClass3){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+50")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },500);
+
+
+                  $(".sourceP").html(sourceNum+50);
+                }
+                $(".fuelBox").find("img").eq(i).remove();
+              }
+            }
+      }
+      function fuelMove2(){
+        $(".fuel2").animate({top:"100%"},5000,"linear",function(){
+          $(this).remove();
+        });
+        for(var i=0;i<$(".fuelBox").find("img").length;i++){
+
+              console.log(isOverlap(".air",$(".fuelBox").find("img").eq(i)));
+              if(isOverlap(".air",$(".fuelBox").find("img").eq(i))){
+                var hasClass1 = $(".fuelBox").find("img").eq(i).hasClass("fuel1");
+                var hasClass2 = $(".fuelBox").find("img").eq(i).hasClass("fuel2");
+                var hasClass3 = $(".fuelBox").find("img").eq(i).hasClass("fuel3");
+                if(hasClass1){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+                  // 设置得分位置
+                  // alert($(".air").css("left").split("px")[0])
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+150")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+                  $(".sourceP").html(sourceNum+150);
+                }else if(hasClass2){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+100")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+
+                  $(".sourceP").html(sourceNum+100);
+                }else if(hasClass3){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+50")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },500);
+
+
+                  $(".sourceP").html(sourceNum+50);
+                }
+                $(".fuelBox").find("img").eq(i).remove();
+              }
+            }
+      }
+      function fuelMove3(){
+        $(".fuel3").animate({top:"100%"},5000,"linear",function(){
+          $(this).remove();
+        });
+        for(var i=0;i<$(".fuelBox").find("img").length;i++){
+
+              console.log(isOverlap(".air",$(".fuelBox").find("img").eq(i)));
+              if(isOverlap(".air",$(".fuelBox").find("img").eq(i))){
+                var hasClass1 = $(".fuelBox").find("img").eq(i).hasClass("fuel1");
+                var hasClass2 = $(".fuelBox").find("img").eq(i).hasClass("fuel2");
+                var hasClass3 = $(".fuelBox").find("img").eq(i).hasClass("fuel3");
+                if(hasClass1){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+                  // 设置得分位置
+                  // alert($(".air").css("left").split("px")[0])
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+150")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+                  $(".sourceP").html(sourceNum+150);
+                }else if(hasClass2){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+100")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },800);
+
+
+                  $(".sourceP").html(sourceNum+100);
+                }else if(hasClass3){
+                  if($(".sourceP").text() == ""){
+                    var sourceNum = 0;
+                  }else{
+                    var sourceNum = parseInt($(".sourceP").text());
+                  }
+
+                  var airLeft = $(".air").css("left").split("px")[0]+200;
+                  var airTop = $(".air").css("top").split("px")[0]-50;
+                  $(".getNum").html("+50")
+                  $(".getNum").fadeIn();
+                  $(".getNum").css({top:airTop+"px",left:airLeft+"px"});
+                  setTimeout(function(){
+                    $(".getNum").fadeOut();
+                  },500);
+
+
+                  $(".sourceP").html(sourceNum+50);
+                }
+                $(".fuelBox").find("img").eq(i).remove();
+              }
+            }
+      }
+      fuelMove();
+      fuelMove2();
+      fuelMove3();
+
+      setInterval(function creatImg(){
+        // var x = 12;
+        // var y = 2;
+        // var rand = parseInt(Math.random() * (x - y + 1) + y);
+        var randNumber = parseInt(Math.random() * 11+2);
+        // console.log(randNumber)
+        $(".fuelBox").append('<img src="images/fuel3.png" class="fuelImg fuel3" style="top:-30%;left:'+randNumber*5+'%;">')
+        fuelMove3();
+      },3000);
+      setInterval(function creatImg(){
+        var randNumber = parseInt(Math.random() * 11+2);
+        $(".fuelBox").append('<img src="images/fuel2.png" class="fuelImg fuel2" style="top:-30%;left:'+randNumber*5.5+'%;">')
+        fuelMove2();
+      },6925);
+      setInterval(function creatImg(){
+        var randNumber = parseInt(Math.random() * 11+2);
+        $(".fuelBox").append('<img src="images/fuel1.png" class="fuelImg fuel1" style="top:-30%;left:'+randNumber*6+'%;">')
+        fuelMove();
+      },13120);
+
+
+
+
+
+  })
+
+
+</script>
+</html>

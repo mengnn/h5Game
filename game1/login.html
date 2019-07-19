@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <!-- 设置 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+        body{
+            font-family:'Microsoft Yahei','Simsun';
+            color:#333;
+        }
+        input{
+          outline: none;
+        }
+        html,body{
+          width:100%;
+          height: 100%;
+          padding:0;
+          margin:0;
+        }
+        .content_box{
+          width: 100%;
+          height: 100%;
+          background: url(images/bg1.jpg) 0 0 no-repeat;
+          background-size: 100% 100%;
+        }
+        .main{
+          width: 100%;
+          overflow:hidden;
+          max-height: 100%;
+        }
+        .logo1{
+          width: 69%;
+          margin: 0 auto;
+          display: block;
+          margin-top: 8%;
+        }
+        .btn1{
+          margin-top: 4%;
+          width: 100%;
+          display:block;
+          overflow:hidden;
+          outline-style: none;
+        }
+        .btn2{
+          width: 100%;
+          margin-top: 5%;
+          display:block;
+          overflow:hidden;
+        }
+        .btn1 img,.btn2 img{
+          width: 100%;
+        }
+        a{
+          -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+          -webkit-user-select: none;
+          -moz-user-focus: none;
+          -moz-user-select: none;
+        }
+
+         @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+              .btn1{
+                  margin-top: 6%;
+                }
+            }
+            @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio:2) {
+              .btn1{
+                  margin-top: 6%;
+                }
+            }
+
+    </style>
+</head>
+<body>
+ <div class="content_box" id="main">
+   <div class="main">
+     <img src="images/logo213.png" class="logo1">
+     <b  class="btn1">
+       <img src="images/btn44.png" style="display: none;" class="b1">
+       <img src="images/btn444.png"  style="display: block;"  class="b2">
+     </b>
+     <b  class="btn2">
+       <img src="images/45.png"  style="display: block;"   class="b4">
+       <img src="images/btn55.png" style="display: none;"  class="b3">
+     </b>
+   </div>
+ </div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="../../data-js/js.cookie.js"></script>
+<script src="../../data-js/js.storage.min.js"></script>
+<script type="text/javascript">
+
+      //禁止下拉及默认滑动动作
+      document.getElementById("main").addEventListener('touchmove',e,false);
+      function e(event){
+        event.preventDefault();
+      }
+
+
+      window.alert = function(name){
+                var iframe = document.createElement("IFRAME");
+                iframe.style.display="none";
+                document.documentElement.appendChild(iframe);
+                window.frames[0].window.alert(name);
+                iframe.parentNode.removeChild(iframe);
+            }
+            window.confirm = function (message) {
+                var iframe = document.createElement("IFRAME");
+                iframe.style.display = "none";
+                iframe.setAttribute("src", 'data:text/plain,');
+                document.documentElement.appendChild(iframe);
+                var alertFrame = window.frames[0];
+                var result = alertFrame.window.confirm(message);
+                iframe.parentNode.removeChild(iframe);
+                return result;
+      }
+
+
+      // 到时间按钮改变倒计时
+      function countTime() {
+          //获取当前时间
+          var start = new Date().getTime();//当前时间
+          var endDate = new Date("2019/7/12 18:30:00").getTime();//游戏时间  体感
+          var endDate2 = new Date("2019/7/13 9:30:00").getTime();//游戏时间  触感
+
+          var kTime1 = new Date("2019/7/13 1:00:00").getTime();//游戏时间  开放13号九点半
+          var kTime2 = new Date("2019/7/13 12:00:00").getTime();//游戏时间  开放13号十八点半
+          var kTime3 = new Date("2019/7/14 1:00:00").getTime();//游戏时间  开放14号九点半
+
+          var k1 = kTime1-start;
+          var k2 = kTime2-start;
+          var k3 = kTime3-start;
+          // console.log(k1+"----"+k2+"----"+k3)
+          if(k1<=0 & k2>0  & k3>0){
+            $(".logo1").attr("src","images/logo2.png");
+          }else if(k1<=0 & k2<=0  & k3>0){
+            $(".logo1").attr("src","images/logo213.png");
+          }else if(k1<=0 & k2<=0  & k3<=0){
+            $(".logo1").attr("src","images/logo2.png");
+          }
+
+
+
+          //时间差
+         var leftTime = endDate-start;
+         var leftTime2 = endDate2-start;
+         // console.log(leftTime)
+          if (leftTime<=0) {
+              $(".b1").show();
+              $(".b2").hide();
+          }
+          if (leftTime2<=0) {
+              $(".b3").show();
+              $(".b4").hide();
+          }
+          setTimeout(countTime,1000);
+      }
+
+      $(function(){
+        countTime()
+      })
+
+
+
+      $(".btn1").click(function(){
+        var start = new Date().getTime();//当前时间
+        var endDate = new Date("2019/7/12 18:30:00").getTime();//游戏时间  体感
+         //时间差
+         var leftTime = endDate-start;
+         if(leftTime<=0){
+           window.location.replace("start.html");
+           $(".b1").show();
+           $(".b2").hide();
+         }else{
+            alert("不在游戏时间内")
+            $(".b1").hide();
+            $(".b2").show();
+         }
+
+      })
+      $(".btn2").click(function(){
+        var start = new Date().getTime();//当前时间
+        var endDate2 = new Date("2019/7/13 9:30:00").getTime();//游戏时间  触感
+        //时间差
+         var leftTime2 = endDate2-start;
+         // alert(leftTime2)
+        if(leftTime2<=0){
+           window.location.replace("../game2/start.html")
+           $(".b3").show();
+           $(".b4").hide();
+         }else{
+            alert("不在游戏时间内")
+            $(".b3").hide();
+            $(".b4").show();
+         }
+      })
+      Storages.alwaysUseJsonInStorage(true);
+      var uid = Storages.cookieStorage.get('uid');
+      var openid = Storages.cookieStorage.get('openid');
+      if(!uid){alert("请先报名");
+    	  window.location.replace("empower.html");
+      }
+      else if(!openid){alert("请先报名");
+    	  window.location.replace("empower.html");
+      }
+
+    function getQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	var r = decodeURI(window.location.search).substr(1).match(reg);
+	if (r != null) return unescape(r[2]);
+	return null;
+    }
+
+
+
+
+</script>
+</html>

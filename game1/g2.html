@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>新朋友</title>
+    <!-- 设置 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+        body{
+            font-family:'Microsoft Yahei','Simsun';
+            color:#333;
+        }
+        input{
+          outline: none;
+        }
+        html,body{
+          width:100%;
+          height: 100%;
+          padding:0;
+          margin:0;
+        }
+        .content_box{
+          width: 100%;
+          height: 100%;
+          background: url(images/bg2.png) 0 0 no-repeat;
+          background-size: 100% 100%;
+        }
+        .main{
+          width: 100%;
+          overflow:hidden;
+          max-height: 100%;
+        }
+        .logo1{
+          width: 74%;
+          margin: 0 auto;
+          display: block;
+          margin-top: 8%;
+        }
+        .btn1{
+          margin-top: 0%;
+          width: 100%;
+          display:block;
+          overflow:hidden;
+          outline-style: none;
+        }
+        .btn1 img{
+          width: 100%;
+        }
+        a{
+          -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+          -webkit-user-select: none;
+          -moz-user-focus: none;
+          -moz-user-select: none;
+        }
+        .htmlBox{
+          width: 100%;
+          overflow:hidden;
+          position: relative;
+          margin-top: 5%;
+        }
+        .htmlBox img{
+          width: 100%;
+        }
+        .g2_title{
+          position: absolute;
+          width: 100%;
+          text-align: center;
+          color: #fff;
+          font-size: 20px;
+          left: 0;
+          top: 15%;
+        }
+        .mainBox{
+          width: 100%;
+          overflow:hidden;
+          position: absolute;
+          top: 37%;
+          left: 0;
+        }
+        .inputBox{
+          width: 64%;
+          margin:0 auto;
+          overflow:hidden;
+          /*height: 30px;*/
+          /*border: 1px solid #ccc;*/
+          margin-bottom: 10px;
+        }
+        .inputBox span{
+          color: #fff;
+          font-size: 16px;
+        }
+        .inputBox input,.inputBox select{
+          width: 78%;
+          background: transparent;
+          outline-style: none;
+          border:none;
+          border-bottom: 1px solid #fff;
+          color: #fff;
+          border-radius: 0;
+          box-sizing: content-box;
+          font-size: 16px;
+        }
+        ::-webkit-input-placeholder { /* Chrome */
+            color: #e5e5e5;
+          }
+          :-ms-input-placeholder { /* IE 10+ */
+            color: color: #e5e5e5;
+          }
+          ::-moz-placeholder { /* Firefox 19+ */
+            color: color: #e5e5e5;
+          }
+          :-moz-placeholder { /* Firefox 4 - 18 */
+            color: color: #e5e5e5;
+          }
+
+           @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+              .btn1{
+                  margin-top: 2%;
+                }
+            }
+            @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio:2) {
+              .btn1{
+                  margin-top: 2%;
+                }
+            }
+
+    </style>
+</head>
+<body>
+
+ <div class="content_box" id="main">
+   <div class="main">
+     <img src="images/logo1.png" class="logo1">
+     <div class="htmlBox">
+       <img src="images/box.png">
+       <p class="g2_title">新朋友（未入职）</p>
+       <div class="mainBox">
+         <div class="inputBox">
+           <span>姓名</span>
+           <input id="xm" type="text" name="" placeholder="请输入姓名" class="inputbBlur">
+         </div>
+         <div class="inputBox">
+           <span>年龄</span>
+           <!-- <input type="text" name=""  class="inputbBlur inputN" placeholder="请输入年龄"> -->
+           <select class="inputbBlur inputN">
+            <option style="color: #e5e5e5;">请选择</option>
+             <option>1971年以前</option>
+             <option>1971年-1980年</option>
+             <option>1981年-1990年</option>
+             <option>1991年-1996年</option>
+           </select>
+         </div>
+         <div class="inputBox">
+           <span>手机号</span>
+           <input id="dh" type="text" name="" style="width: 71%;" class="inputbBlur" placeholder="请输入手机号">
+         </div>
+       </div>
+     </div>
+     <b  class="btn1">
+       <img src="images/btn3.png">
+     </b>
+   </div>
+ </div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="../../data-js/js.cookie.js"></script>
+<script src="../../data-js/js.storage.min.js"></script>
+<script type="text/javascript">
+      <!-- 年龄限制 -->
+      // $(".inputN").keyup(function(){
+      //     $(this).val($(this).val().replace( /[^0-9]/g,''));
+      // })
+      //  $(".inputN").blur(function(){
+      //     var thiV = $(this).val();
+      //     if(thiV <18){
+      //       $(this).val("");
+      //       alert("18岁以下未成年谢绝参与会场");
+      //     }
+      // })
+
+       // 去除alert网址
+       window.alert = function(name){
+           var iframe = document.createElement("IFRAME");
+            iframe.style.display="none";
+            iframe.setAttribute("src", 'data:text/plain,');
+            document.documentElement.appendChild(iframe);
+            window.frames[0].window.alert(name);
+            iframe.parentNode.removeChild(iframe);
+        }
+
+      //禁止下拉及默认滑动动作
+      document.getElementById("main").addEventListener('touchmove',e,false);
+      function e(event){
+        event.preventDefault();
+      }
+      $(".btn1").click(function(){
+        //window.location.replace("login.html")
+        //var openid = Storages.cookieStorage.get('openid');
+        //var nickname = Storages.cookieStorage.get('nickname');
+        //var headimgurl = Storages.cookieStorage.get('headimgurl');
+
+        var name = $("#xm").val();
+    	var mobile = $("#dh").val();
+    	var age = $(".inputN").val();
+    	var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+    	if (!myreg.test(mobile)) {
+    		alert("手机号格式不正确");
+    		return;
+    	}
+    	if (!name) {
+    		alert("请填写姓名");
+    		return;
+    	}
+    	if (!age) {
+    		alert("请填写年龄");
+    		return;
+    	}
+
+    	Storages.cookieStorage.setConf({path:'/',expires:100}).set('name',name);
+    	Storages.cookieStorage.setConf({path:'/',expires:100}).set('mobile',mobile);
+    	Storages.cookieStorage.setConf({path:'/',expires:100}).set('age',age);
+    	Storages.cookieStorage.setConf({path:'/',expires:100}).set('cnid',"");
+
+    	window.location.replace("login.html");
+    	/* $.ajax({
+    		url : "/saveHhUser",
+    		data : JSON.stringify({
+    			name : name,
+    			mobile : mobile,
+    			age : age,
+    			cnid : "",
+    			openid : openid,
+    			nickname : nickname,
+    			headimgurl : headimgurl
+    		}),
+    		type : "POST",
+    		async : true,
+    		dataType : "json",
+    		contentType : "application/json; charset=UTF-8",
+    	}).done(
+    			function(data) {
+    				var msg = JSON.parse(data.message);
+    				window.location.replace("code.html?v1=" + msg.id + "&v2="
+    						+ msg.qrcode);
+
+    			}).fail(
+    			function(xhr, status, errorThrown) {
+    				alert("Sorry, there was a problem! " + "Error: " + errorThrown
+    						+ "Status: " + status);
+    				console.log("Error: " + errorThrown);
+    				console.log("Status: " + status);
+    				console.dir(xhr);
+    			}).always(function(xhr, status) {
+    		console.log("The request is complete!");
+    	});*/
+      })
+
+      // 解决input
+    $(".inputbBlur").blur(function(){
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    });
+    $(".inputbBlur").focus(function(){
+        document.body.scrollTop = 220;
+        document.documentElement.scrollTop = 220;
+    });
+    // alert($(".inputbBlur").focus())
+
+
+</script>
+</html>

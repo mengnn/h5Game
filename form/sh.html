@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>审核</title>
+    <!-- 设置 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+        body{
+            font-family:'Microsoft Yahei','Simsun';
+            color:#333;
+            background:#fff;
+        }
+        input{
+          outline: none;
+        }
+        html,body{
+          padding:0;
+          margin:0;
+          background-color:transparent;
+          overflow:hidden;
+          width: 100%;
+          height: 100%;
+        }
+        .content_box{
+          width: 100%;
+          height: 100%;
+          overflow-y: auto;
+          /*background:url(images/phone.png) 0% 0% no-repeat;
+          background-size: 100% 100%;*/
+        }
+        .title{
+          width: 100%;
+          height: 50px;
+          line-height: 50px;
+          font-size: 18px;
+          text-align: center;
+        }
+        .ulList{
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          overflow:hidden;
+          width: 90%;
+          margin-left: 5%;
+        }
+        .ulList li{
+          width: 95.4%;
+          min-height: 70px;
+           padding: 10px 2%;
+           border:1px solid #ccc;
+           border-radius: 5px;
+           margin-bottom: 20px;
+        }
+        .ulHtml{
+          width: 100%;
+          line-height: 1.8;
+          font-size: 14px;
+          text-align: justify;
+        }
+        .ulBtn{
+          width: 100%;
+          overflow:hidden;
+          text-align: right;
+          margin-top: 10px;
+        }
+        .ulBtn span{
+          width: 80px;
+          height: 30px;
+          display: inline-block;
+          text-align: center;
+          line-height: 30px;
+          border:1px solid #e5e5e5;
+          font-size: 14px;
+          margin-left:10px;
+        }
+        .refreshbox{
+              width: 90%;
+              margin-left: 5%;
+          overflow:hidden;
+          text-align: right;
+          margin-bottom: 15px;
+        }
+        .refreshbox span{
+          width: 80px;
+          height: 30px;
+          display: inline-block;
+          text-align: center;
+          line-height: 30px;
+          border: 1px solid #4078cb;
+          font-size: 14px;
+          margin-left: 10px;
+          color: #4078cb;
+        }
+
+    </style>
+</head>
+<body>
+ <div class="content_box">
+  <div class="title">审核</div>
+  <div class="refreshbox">
+    <span onclick="loading();">刷新</span>
+  </div>
+  <ul class="ulList">
+    <!-- <li>
+      <div class="ulHtml">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      </div>
+      <div class="ulBtn">
+        <span>通过</span>
+        <span>驳回</span>
+      </div>
+    </li>
+    <li>
+      <div class="ulHtml">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      </div>
+      <div class="ulBtn">
+        <span>通过</span>
+        <span>驳回</span>
+      </div>
+    </li>
+    <li>
+      <div class="ulHtml">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      </div>
+      <div class="ulBtn">
+        <span>通过</span>
+        <span>驳回</span>
+      </div>
+    </li>
+    <li>
+      <div class="ulHtml">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      </div>
+      <div class="ulBtn">
+        <span>通过</span>
+        <span>驳回</span>
+      </div>
+    </li> -->
+  </ul>
+ </div>
+</body>
+<script src="js/jquery.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	loading();
+});
+
+function loading(){
+	      $.ajax({
+		  		url : "/getWall",
+		  		data : JSON.stringify({
+		  			type : getQueryString("v")
+		  		}),
+		  		type : "POST",
+		  		async : true,
+		  		dataType : "json",
+		  		contentType : "application/json; charset=UTF-8",
+		  	}).done(
+		  			function(data) {
+		  				if(!data.message){}else{
+		  				var msg = JSON.parse(data.message);
+		  				$(".ulList").empty();
+		  				for(var i = 0;i<msg.length;i++){
+		  					$(".ulList").append("<li>\n" +
+		  						"      <div class=\"ulHtml\">\n" + msg[i].text +
+		  						"      </div>\n" +
+		  						"      <div class=\"ulBtn\">\n" +
+		  						"        <span  onclick='pass("+msg[i].id+");'>通过</span>\n" +
+		  						"        <span  onclick='reject("+msg[i].id+");'>驳回</span>\n" +
+		  						"      </div>\n" +
+		  						"    </li>");
+		  					}
+		  				}
+		  				//}
+		  				/* 
+		  				Storages.cookieStorage.setConf({path:'/',expires:100}).set('uid',msg.id); */
+		  			}).fail(
+		  			function(xhr, status, errorThrown) {
+		  				alert("Sorry, there was a problem! " + "Error: " + errorThrown
+		  						+ "Status: " + status);
+		  				console.log("Error: " + errorThrown);
+		  				console.log("Status: " + status);
+		  				console.dir(xhr);
+		  			}).always(function(xhr, status) {
+		  		console.log("The request is complete!");
+		  	});
+}
+
+function pass(id){
+    $.ajax({
+	  		url : "/passWall",
+	  		data : JSON.stringify({
+	  			id : id+""
+	  		}),
+	  		type : "POST",
+	  		async : true,
+	  		dataType : "json",
+	  		contentType : "application/json; charset=UTF-8",
+	  	}).done(
+	  			function(data) {
+	  				loading()
+	  			}).fail(
+	  			function(xhr, status, errorThrown) {
+	  				alert("Sorry, there was a problem! " + "Error: " + errorThrown
+	  						+ "Status: " + status);
+	  				console.log("Error: " + errorThrown);
+	  				console.log("Status: " + status);
+	  				console.dir(xhr);
+	  			}).always(function(xhr, status) {
+	  		console.log("The request is complete!");
+	  	});
+}
+
+function reject(id){
+    $.ajax({
+	  		url : "/rejectWall",
+	  		data : JSON.stringify({
+	  			id : id+""
+	  		}),
+	  		type : "POST",
+	  		async : true,
+	  		dataType : "json",
+	  		contentType : "application/json; charset=UTF-8",
+	  	}).done(
+	  			function(data) {
+	  				loading()
+	  			}).fail(
+	  			function(xhr, status, errorThrown) {
+	  				alert("Sorry, there was a problem! " + "Error: " + errorThrown
+	  						+ "Status: " + status);
+	  				console.log("Error: " + errorThrown);
+	  				console.log("Status: " + status);
+	  				console.dir(xhr);
+	  			}).always(function(xhr, status) {
+	  		console.log("The request is complete!");
+	  	});
+}
+
+function getQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = decodeURI(window.location.search).substr(1).match(reg);
+	if (r != null) return unescape(r[2]); 
+	return null;
+}
+</script>
+</html>

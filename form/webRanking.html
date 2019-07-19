@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>排名</title>
+    <!-- 设置 viewport -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" /> -->
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+        body{
+            font-family:'Microsoft Yahei','Simsun';
+            color:#333;
+        }
+        input{
+          outline: none;
+        }
+        html,body{
+          width:1366px;
+          height: 420px;
+          padding:0;
+          margin:0;
+          overflow:hidden;
+          margin: 0 auto;
+        }
+        .content_box{
+          width: 100%;
+          height: 100%;
+          background: url(images/webRanking.png) 0 0 no-repeat;
+          background-size: 100% 100%;
+          overflow:hidden;
+        }
+        .main{
+          width: 100%;
+          overflow:hidden;
+          height: 100%;
+        }
+        .rankTitle{
+          width: 85%;
+          margin-left: 15%;
+          margin-top: 2%;
+        }
+        .rankTbox{
+          width: 73%;
+          height: 65%;
+          margin: -9% 12% 0 15%;
+          background: url(images/rankTbg.png) 0 0 no-repeat;
+          background-size: 100% 100%;
+          position: relative;
+        }
+        .rankTul{
+          width:90%;
+          height: 70%;
+          position: absolute;
+          top: 15%;
+          left: 5%;
+          background: #fff;
+          border-radius: 20px;
+        }
+        .rankTul ul{
+          float: left;
+          height: 85%;
+          margin: 0;
+          padding: 0;
+          margin-top: 1.5%;
+          list-style: none;
+        }
+        .rankTul .rankTleft{
+          width:33%;
+          margin-left: 2%;
+        }
+        .rankTul .rankTright{
+          width:61%;
+          margin-left: 2%;
+          background: #3495FA;
+          border-radius: 15px;
+        }
+        .rankTleft li{
+          width: 100%;
+          height: 31%;
+          margin-bottom: 2.5%;
+          background: #40BDD1;
+          border-radius: 10px;
+        }
+        .topImg{
+          height: 90%;
+          vertical-align: top;
+          /*margin: 5% 2%;*/
+        }
+        .personImg{
+          height: 90%;
+          border-radius: 50%;
+          margin-top: 1%;
+          margin-left: 5px;
+        }
+        .personName{
+          color: #000;
+          vertical-align: top;
+          font-size: 1.5vh;
+          margin-top: 6%;
+          display: inline-block;
+          width: 36%;
+          overflow:hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .rankTright li{
+          float: left;
+          margin-top: 2%;
+          width: 25%;
+          height: 40%;
+        }
+        .rankTright li:nth-child(5){
+          margin-left: 12.5%;
+        }
+        .rTopimg{
+          text-align: center;
+        }
+        .rTopsimg{
+          width: 15%;
+          vertical-align: top;
+        }
+        .rpersonImg{
+          width: 35%;
+          border-radius: 50%;
+        }
+        .rTopbtn{
+          width: 75%;
+          height: 33%;
+          background: -moz-linear-gradient(#D04EFE,#963EFF);
+          background: -webkit-gradient(#D04EFE,#963EFF);
+          background: -o-linear-gradient(#D04EFE,#963EFF);
+          background: -ms-linear-gradient(#D04EFE,#963EFF);
+          background: linear-gradient(#D04EFE,#963EFF);
+          margin:0 auto;
+          border-radius: 50px;
+        }
+        .xImg{
+          height: 90%;
+          margin-top: 1%;
+        }
+        .rTopbtn span{
+          display:inline-block;
+          vertical-align: top;
+          color: #fff;
+          margin-top: 0;
+          width: 73%;
+          overflow:hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 14px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+ <div class="content_box" id="main">
+   <div class="main">
+    <img src="images/rankTitle.png" class="rankTitle">
+    <div class="rankTbox">
+      <div class="rankTul">
+        <ul class="rankTleft">
+          <li>
+            <img src="images/t1.png" class="topImg">
+            <img src="images/personImg.png" class="personImg" id="t1">
+            <span class="personName" id="n1">孟繁胜游</span>
+          </li>
+          <li>
+            <img src="images/t2.png" class="topImg">
+            <img src="images/personImg.png" class="personImg" id="t2">
+            <span class="personName" id="n2">孟繁胜游</span>
+          </li>
+          <li style="margin-bottom: 0;">
+            <img src="images/t3.png" class="topImg">
+            <img src="images/personImg.png" class="personImg"  id="t3">
+            <span class="personName" id="n3">孟繁胜游</span>
+          </li>
+        </ul>
+        <ul class="rankTright">
+          <li>
+            <div class="rTopimg">
+              <img src="images/top4.png" class="rTopsimg">
+              <img src="images/personImg.png" class="rpersonImg" id="t4">
+            </div>
+            <div class="rTopbtn">
+              <img src="images/xing.png" class="xImg">
+              <span id="n4">孟繁胜游</span>
+            </div>
+          </li>
+          <li>
+            <div class="rTopimg">
+              <img src="images/top5.png" class="rTopsimg">
+              <img src="images/personImg.png" class="rpersonImg" id="t5">
+            </div>
+            <div class="rTopbtn">
+              <img src="images/xing.png" class="xImg">
+              <span id="n5">孟繁胜游</span>
+            </div>
+          </li>
+          <li>
+            <div class="rTopimg">
+              <img src="images/top6.png" class="rTopsimg">
+              <img src="images/personImg.png" class="rpersonImg" id="t6">
+            </div>
+            <div class="rTopbtn">
+              <img src="images/xing.png" class="xImg">
+              <span id="n6">孟繁胜游</span>
+            </div>
+          </li>
+          <li>
+            <div class="rTopimg">
+              <img src="images/top7.png" class="rTopsimg">
+              <img src="images/personImg.png" class="rpersonImg" id="t7">
+            </div>
+            <div class="rTopbtn">
+              <img src="images/xing.png" class="xImg">
+              <span id="n7">孟繁胜游</span>
+            </div>
+          </li>
+          <li>
+            <div class="rTopimg">
+              <img src="images/top8.png" class="rTopsimg">
+              <img src="images/personImg.png" class="rpersonImg" id="t8">
+            </div>
+            <div class="rTopbtn">
+              <img src="images/xing.png" class="xImg">
+              <span id="n8">孟繁胜游</span>
+            </div>
+          </li>
+          <li>
+            <div class="rTopimg">
+              <img src="images/top9.png" class="rTopsimg">
+              <img src="images/personImg.png" class="rpersonImg" id="t9">
+            </div>
+            <div class="rTopbtn">
+              <img src="images/xing.png" class="xImg">
+              <span id="n9">孟繁胜游</span>
+            </div>
+          </li>
+          <li>
+            <div class="rTopimg">
+              <img src="images/top10.png" class="rTopsimg">
+              <img src="images/personImg.png" class="rpersonImg" id="t10">
+            </div>
+            <div class="rTopbtn">
+              <img src="images/xing.png" class="xImg">
+              <span id="n10">孟繁胜游</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+   </div>
+ </div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="../../data-js/js.cookie.js"></script>
+<script src="../../data-js/js.storage.min.js"></script>
+<script type="text/javascript">
+
+  var h = $(window).height();
+  var marginTop = (h-420)/2;
+  $("body").css("margin-top",marginTop+"px")
+  $(window).resize(function(){
+       var h = $(window).height();
+      var marginTop = (h-420)/2;
+      $("body").css("margin-top",marginTop+"px")
+    });
+
+$(function() {
+	Storages.alwaysUseJsonInStorage(true);
+	countSecond();
+});
+
+function countSecond(){
+	$.ajax({
+  		url : "/findTopG"+getQueryString("v"),
+  		data : JSON.stringify({
+  		}),
+  		type : "POST",
+  		async : true,
+  		dataType : "json",
+  		contentType : "application/json; charset=UTF-8",
+  	}).done(
+  			function(data) {
+  				var msg = JSON.parse(data.message);
+  				for(var i = 0;i<msg.length;i++){
+  					$("#t"+msg[i][0]).attr("src",msg[i][8]);
+  					$("#n"+msg[i][0]).text(msg[i][7]);
+  				}
+  			}).fail(
+  			function(xhr, status, errorThrown) {
+  				/* alert("Sorry, there was a problem! " + "Error: " + errorThrown
+  						+ "Status: " + status); */
+  				console.log("Error: " + errorThrown);
+  				console.log("Status: " + status);
+  				console.dir(xhr);
+  			}).always(function(xhr, status) {
+  		console.log("The request is complete!");
+  		setTimeout("countSecond()", 1000);
+  	});
+}
+
+function getQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	var r = decodeURI(window.location.search).substr(1).match(reg);
+	if (r != null) return unescape(r[2]);
+	return null;
+}
+
+</script>
+</html>

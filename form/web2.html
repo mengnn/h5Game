@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 设置 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 兼容国产浏览器的高速模式 -->
+    <meta name="renderer" content="webkit">
+    <style>
+body {
+	font-family: 'Microsoft Yahei', 'Simsun';
+	color: #333;
+}
+
+input {
+	outline: none;
+}
+
+html, body {
+	width: 1366px;
+	height: 420px;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+  margin: 0 auto;
+}
+
+.content_box {
+	width: 100%;
+	height: 100%;
+	background: url(images/web2.png) 0 0 no-repeat;
+	background-size: 100% 100%;
+	overflow: hidden;
+}
+
+.main {
+	width: 100%;
+	overflow: hidden;
+	height: 100%;
+  position: relative;
+}
+
+.imgBox {
+	position: absolute;
+	color: #fff;
+	text-align: center;
+	line-height: 77px;
+	height: 77px;
+	overflow: hidden;
+}
+
+.img1{
+          top: 2%;
+          right: 0%;
+          font-size: 22px;
+          color:#F3B122;
+
+        }
+        .img2{
+          top: 12%;
+          right: 0%;
+          font-size: 22px;
+          color:#F20C0C;
+        }
+        .img3{
+          top: 25%;
+          right: 0%;
+          font-size: 24px;
+          color:#227BF3;
+        }
+        .img4{
+          top: 37%;
+          right: 0%;
+          font-size: 30px;
+          color:#ffff;
+        }
+        .img5{
+          top: 48%;
+          right: 0%;
+          font-size: 26px;
+          color:#F20C0C;
+        }
+        .img6{
+          top: 58%;
+          right: 0%;
+          font-size: 22px;
+          color:#F20C0C;
+        }
+        .img7{
+          top: 68%;
+          right: 0%;
+          font-size: 27px;
+          color:#ffff;
+        }
+        .img8{
+          top: 80%;
+          right: 0%;
+          font-size: 22px;
+          color:#F20C0C;
+        }
+</style>
+</head>
+<body>
+ <div class="content_box" id="main">
+   <div class="main">
+     <div class="img1 imgBox">NU SKIN</div>
+     <div class="img2 imgBox">你心中的不平凡</div>
+     <div class="img3 imgBox">不平凡</div>
+     <div class="img4 imgBox">NU SKIN</div>
+     <div class="img5 imgBox">心中的不平凡</div>
+     <div class="img6 imgBox">不平凡</div>
+     <div class="img7 imgBox">心中的不平凡</div>
+     <div class="img8 imgBox">NU SKIN</div>
+   </div>
+ </div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+  var h = $(window).height();
+  var marginTop = (h-420)/2;
+  $("body").css("margin-top",marginTop+"px")
+  $(window).resize(function(){
+       var h = $(window).height();
+      var marginTop = (h-420)/2;
+      $("body").css("margin-top",marginTop+"px")
+    });
+
+  var text = "加油！不平凡！";
+  function imgMove1(){
+    $(".imgBox").animate({left:"-100%"},8000,"linear",function(){
+      $(this).remove();
+    })
+  }
+  imgMove1();
+
+  //var colorArr = ['FFEB3B','ffff','227BF3','F20C0C','F3B122','FF5722','8BC34A']
+
+  //var rand = parseInt(Math.random() * 5 + 1);//随机生成心
+  // alert(rand)
+  setInterval(function(){
+	  $.ajax({
+	  		url : "/getBlueWall",
+	  		data : JSON.stringify({
+	  			walltype : "b"
+	  		}),
+	  		type : "POST",
+	  		async : true,
+	  		dataType : "json",
+	  		contentType : "application/json; charset=UTF-8",
+	  	}).done(
+	  			function(data) {
+	  				if(data.message==""){text = "NU SKIN"}
+	  				else{
+	  					var msg = JSON.parse(data.message);
+		  				text = msg.text;
+	  				}
+	  				var rand2 = parseInt(Math.random() * 8 + 1);//随机生成心
+	  			    if(rand2 == 1){
+	  			      $(".main").append('<div class="img1 imgBox">'+text+'</div>');
+	  			      imgMove1()
+	  			    }else if(rand2 == 2){
+	  			      $(".main").append('<div class="img2 imgBox">'+text+'</div>');
+	  			      imgMove1()
+	  			    }else if(rand2 == 3){
+	  			      $(".main").append('<div class="img3 imgBox">'+text+'</div>');
+	  			      imgMove1()
+	  			    }else if(rand2 == 4){
+	  			      $(".main").append('<div class="img4 imgBox">'+text+'</div>');
+	  			      imgMove1()
+	  			    }else if(rand2 == 5){
+	  			      $(".main").append('<div class="img5 imgBox">'+text+'</div>');
+	  			      imgMove1()
+	  			    }else if(rand2 == 6){
+	  			      $(".main").append('<div class="img6 imgBox">'+text+'</div>');
+	  			      imgMove1()
+	  			    }else if(rand2 == 7){
+	  			      $(".main").append('<div class="img7 imgBox">'+text+'</div>');
+	  			      imgMove1()
+	  			    }else if(rand2 == 8){
+	  			      $(".main").append('<div class="img8 imgBox">'+text+'</div>');
+	  			      imgMove1()
+	  			    }
+	  			}).fail(
+	  			function(xhr, status, errorThrown) {
+	  				// alert("Sorry, there was a problem! " + "Error: " + errorThrown
+	  				// 		+ "Status: " + status);
+	  				console.log("Error: " + errorThrown);
+	  				console.log("Status: " + status);
+	  				console.dir(xhr);
+	  			}).always(function(xhr, status) {
+	  		console.log("The request is complete!");
+	  	});
+   // var rand = parseInt(Math.random() * 5 );//随机生成颜色
+
+
+  },1500)
+
+  // setInterval(function creatImg(){
+  //   // var x = 12;
+  //   // var y = 2;
+  //   // var rand = parseInt(Math.random() * (x - y + 1) + y);
+  //   var randNumber = parseInt(Math.random() * 11+2);
+  //   // console.log(randNumber)
+  //   $(".fuelBox").append('<img src="images/fuel3.png" class="fuelImg fuel3" style="top:-30%;left:'+randNumber*5+'%;">')
+  //   fuelMove3();
+  // },1500);
+
+</script>
+</html>
